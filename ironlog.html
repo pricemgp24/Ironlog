@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0a0a0f">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>IRON LOG</title>
+<style>
+  
+
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #0f0f16;
+    --bg3: #141420;
+    --border: #1e1e2e;
+    --text: #e8e0d0;
+    --muted: #888;
+    --dim: #444;
+    --red: #c0392b;
+    --red-a: #e74c3c;
+    --blue: #1a6baa;
+    --blue-a: #3498db;
+    --purple: #6c3483;
+    --purple-a: #9b59b6;
+    --green: #27ae60;
+    --gold: #c8932e;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    max-width: 480px;
+    margin: 0 auto;
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  #header {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px 0;
+  }
+
+  #header-top {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 10px;
+  }
+
+  #app-title {
+    font-family: system-ui, -apple-system, sans-serif; letter-spacing: 1px; font-weight: 700;
+    font-size: 28px; font-weight: 900;
+    letter-spacing: 3px; line-height: 1;
+  }
+
+  #header-actions { display: flex; gap: 8px; }
+
+  .hbtn {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 6px; color: var(--text);
+    cursor: pointer; font-size: 15px; padding: 7px 11px;
+    font-family: system-ui, -apple-system, sans-serif; letter-spacing: 1px; font-weight: 700;
+    font-weight: 600; letter-spacing: 1px;
+    transition: background 0.15s;
+  }
+  .hbtn:active { background: var(--border); }
+
+  /* ── WEEK SELECTOR ── */
+  #week-row {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 5px; margin-bottom: 8px;
+  }
+
+  .wbtn {
+    padding: 7px 4px; border-radius: 4px; cursor: pointer;
+    font-family: system-ui, -apple-system, sans-serif; letter-spacing: 1px; font-weight: 700;
+    font-size: 13px; font-weight: 700; letter-spacing: 2px;
+    border: 1px solid var(--border); background: var(--bg3);
+    color: var(--dim); transition: all 0.15s; text-align: center;
+  }
+  .wbtn.active { color: #fff; }
+  .wbtn:active { opacity: 0.8; }
+
+  /* ── REP BANNER ── */
+  #rep-banner {
+    border-radius: 4px; padding: 8px 12px; margin-bottom: 8px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  #rep-label { font-size: 10px; font-family: system-ui, -apple-system, sans-serif; letter-spacing: 1px; font-weight: 700; letter-spacing: 3px; }
+  #rep-range { font-family: system-ui, -apple-system, sans-serif; letter-spacing: 1px; font-weight: 700; font-size: 22px; font-weight: 900; }
+  #rep-pct { font-size: 11px; font-family: monospace; color: var(--muted); }
+
+  /* ── DAY TABS ── */
+  #day-tabs {
+    display: flex; gap: 5px; overflow-x: auto;
+    padding-bottom: 10px; scrollbar-width: none;
+  }
+  #day-tabs::-webkit-scrollbar { display: none; }
+
+  .dtab {
+    padding: 7px 14px; border-radius: 4px; cursor: pointer;
+    font-family: system-ui, -apple-system, sans-serif; letter-spacing: 1px; font-weight: 700;
+    font-size: 13px; font-weight: 700; letter-spacing: 2px;
+    border: 1px solid var(--border); background: var(--bg3);
+    color: var(--dim); white-space: nowrap; flex-shrink: 0;
+    transition: all 0.15s; position: relative;
+  }
+  .dtab.active { color: #fff; }
+  .dtab:active { opacity: 0.8; }
+  .dtab .dot {
+    position: absolute; top: -3px; right: -3px;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green); border: 1px solid var(--bg);
+    display: none;
+  }
+  .dtab.done .dot { display: block; }
+
+  /* ── MAIN CONTENT ── */
+  #main { padding: 12px 16px 80px; }
+
+  /* ── ABS BANNER ── */
+  .abs-banner {
+    background: #0b1a0f; border: 1px solid #1a3020;
+    border-left: 3px solid var(--green);
+    border-radius: 6px; padding: 10px 14px;
+    margin-bottom: 12px; display: flex; gap: 10px; align-items: center;
+  }
+  .abs-icon { font-size: 20px; }
+  .abs-label { font-size: 9px; font-family: system-ui, -apple-system, sans-serif; letter-spacing: 1px; font-weight: 700; letter-spacing: 3px; color: var(--green); margin-bottom: 2px; }
+  .abs-ex { font-size: 14px; color: var(--text); }
+
+  /* ── EXERCISE CARD ── */
+  .ex-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px; margin-bottom: 10px;
+    transition: border-color 0.2s;
+  }
+  .ex-card.complete { border-color: var(--dim); }
+
+  .ex-top {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; margin-bottom: 10px;
+  }
+
+  .ex-cat {
+    font-size: 9px; font-family: system-ui, -apple-system, sans-serif; letter-spacing: 1px; font-weight: 700;
+    letter-spacing: 3px; margin-bottom: 3px;
+  }
+
+  .ex-name {
+    font-family: system-ui, -apple-system, sans-serif; letter-spacing: 1px; font-weight: 700;
+    font-size: 18px; font-weight: 700; line-height: 1.1;
+  }
+
+  .ex-sets-badge {
+    font-size: 11px; font-family: monospace;
+    color: var(--muted); padding: 4px 8px;
+    border: 1px solid var(--border); border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  /* ── PREV PERFORMANCE ── */
+  .prev-perf {
+    font-size: 11px; font-family: monospace; color: var(--muted);
+    margin-bottom: 8px; padding: 6px 10px;
+    background: var(--bg); border-radius: 3px;
+    border-left: 2px solid var(--dim);
+  }
+
+  /* ── SET TABLE ── */
+  .set-header {
+    display: grid; grid-template-columns: 28px 1fr 1fr 32px;
+    gap: 6px; margin-bottom: 5px;
+    font-size: 9px; font-family: system-ui, -apple-system, sans-serif; letter-spacing: 1px; font-weight: 700;
+    letter-spacing: 2px; color: var(--dim);
+    padding-bottom: 5px; border-bottom: 1px solid var(--border);
+  }
+
+  .set-row {
+    display: grid; grid-template-columns: 28px 1fr 1fr 32px;
+    gap: 6px; margin-bottom: 6px; align-items: center;
+  }
+
+  .set-num {
+    font-size: 13px; font-family: monospace;
+    color: var(--dim); text-align: center; padding-top: 2px;
+  }
+  .set-num.burnout { color: var(--gold); font-weight: 700; }
+
+  input[type=number], input[type=text] {
+    width: 100%; background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 5px; color: var(--text);
+    font-family: system-ui, -apple-system, sans-serif; letter-spacing: 1px; font-weight: 700;
+    font-size: 18px; font-weight: 600;
+    padding: 9px 10px; outline: none;
+    -webkit-appearance: none; appearance: none;
+    transition: border-color 0.15s;
+  }
+  input[type=number]:focus, input[type=text]:focus {
+    border-color: var(--muted);
+  }
+  input[type=number].filled { border-color: transparent; background: var(--bg3); }
+  input.burnout-input { border-color: var(--gold) !important; color: var(--gold); }
+  input[type=text] {
+    font-size: 13px; font-weight: 400;
+    font-family: system-ui, -apple-system, sans-serif; color: var(--muted);
+  }
+
+  /* hide number spinners */
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
+  input[type=number] { -moz-appearance: textfield; }
+
+  .check {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--bg); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; transition: all 0.2s; flex-shrink: 0;
+  }
+  .check.done { background: var(--green); border-color: var(--green); }
+  .check.burnout-done { background: var(--gold); border-color: var(--gold); }
+
+  .burnout-label {
+    font-size: 9px; font-family: system-ui, -apple-system, sans-serif; letter-spacing: 1px; font-weight: 700;
+    letter-spacing: 2px; color: var(--gold);
+    margin-top: 4px; margin-bottom: 6px;
+  }
+
+  .note-input { margin-top: 8px; }
+
+  /* ── VOLUME FOOTER ── */
+  .vol-footer {
+    display: flex; justify-content: space-between;
+    margin-top: 10px; padding-top: 8px;
+    border-top: 1px solid var(--border);
+    font-size: 11px; font-family: monospace; color: var(--dim);
+  }
+  .vol-footer span { color: var(--gold); }
+
+  /* ── CATEGORY DIVIDER ── */
+  .cat-divider {
+    font-family: system-ui, -apple-system, sans-serif; letter-spacing: 1px; font-weight: 700;
+    font-size: 10px; letter-spacing: 4px; color: var(--dim);
+    padding: 10px 0 6px; margin-top: 4px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .cat-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  /* ── MODAL (Summary / History) ── */
+  #modal {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.85); padding: 20px 16px;
+    overflow-y: auto;
+  }
+  #modal.open { display: block; }
+  #modal-box {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px; max-width: 480px; margin: 0 auto;
+  }
+  #modal-title {
+    font-family: system-ui, -apple-system, sans-serif; letter-spacing: 1px; font-weight: 700;
+    font-size: 22px; font-weight: 900; letter-spacing: 2px;
+    margin-bottom: 16px; display: flex; justify-content: space-between;
+  }
+  .close-btn {
+    background: none; border: none; color: var(--muted);
+    font-size: 20px; cursor: pointer; padding: 0;
+  }
+
+  /* history rows */
+  .hist-week { margin-bottom: 18px; }
+  .hist-week-label {
+    font-family: system-ui, -apple-system, sans-serif; letter-spacing: 1px; font-weight: 700;
+    font-size: 11px; letter-spacing: 4px; color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .hist-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 14px; background: var(--bg3);
+    border-radius: 4px; margin-bottom: 5px;
+    border-left: 3px solid var(--dim);
+  }
+  .hist-row.done { border-left-color: var(--green); }
+  .hist-name { font-family: system-ui, -apple-system, sans-serif; letter-spacing: 1px; font-weight: 700; font-size: 15px; font-weight: 700; flex: 1; }
+  .hist-badge {
+    font-size: 9px; font-family: monospace; letter-spacing: 1px;
+    color: var(--dim); padding: 3px 7px;
+    border: 1px solid var(--border); border-radius: 3px;
+  }
+  .hist-row.done .hist-badge { color: var(--green); border-color: #1a3020; }
+
+  /* summary */
+  .sum-ex { margin-bottom: 14px; }
+  .sum-ex-name {
+    font-family: system-ui, -apple-system, sans-serif; letter-spacing: 1px; font-weight: 700;
+    font-size: 16px; font-weight: 700; margin-bottom: 6px;
+    display: flex; justify-content: space-between;
+  }
+  .sum-set-row {
+    display: flex; justify-content: space-between;
+    padding: 5px 0; border-bottom: 1px solid var(--border);
+    font-size: 13px; font-family: monospace; color: var(--muted);
+  }
+  .sum-set-row span { color: var(--text); }
+  .sum-vol { font-size: 11px; font-family: monospace; color: var(--gold); margin-top: 5px; }
+
+  /* ── TOAST ── */
+  #toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--green); color: #fff;
+    font-family: system-ui, -apple-system, sans-serif; letter-spacing: 1px; font-weight: 700;
+    font-size: 14px; font-weight: 700; letter-spacing: 2px;
+    padding: 10px 20px; border-radius: 20px;
+    opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 300;
+  }
+  #toast.show { opacity: 1; }
+
+  /* ── INSTALL BANNER ── */
+  #install-banner {
+    display: none;
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 150;
+    background: var(--bg2); border-top: 1px solid var(--border);
+    padding: 12px 16px; max-width: 480px; margin: 0 auto;
+    font-size: 13px; color: var(--muted);
+    align-items: center; gap: 10px;
+  }
+  #install-banner button {
+    background: var(--green); border: none; border-radius: 6px;
+    color: #fff; font-family: system-ui, -apple-system, sans-serif; letter-spacing: 1px; font-weight: 700;
+    font-size: 13px; font-weight: 700; letter-spacing: 1px;
+    padding: 8px 14px; cursor: pointer; white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="header">
+  <div id="header-top">
+    <div>
+      <div id="app-title">IRON<span id="title-accent">LOG</span></div>
+    </div>
+    <div id="header-actions">
+      <button class="hbtn" onclick="openHistory()">HIST</button>
+      <button class="hbtn" onclick="openSummary()">TODAY</button>
+    </div>
+  </div>
+
+  <div id="week-row"></div>
+  <div id="rep-banner">
+    <div id="rep-label"></div>
+    <div id="rep-range"></div>
+    <div id="rep-pct"></div>
+  </div>
+  <div id="day-tabs"></div>
+</div>
+
+<!-- MAIN -->
+<div id="main"></div>
+
+<!-- MODAL -->
+<div id="modal">
+  <div id="modal-box">
+    <div id="modal-title">
+      <span id="modal-title-text"></span>
+      <button class="close-btn" onclick="closeModal()">✕</button>
+    </div>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast">SAVED ✓</div>
+
+<!-- INSTALL BANNER -->
+<div id="install-banner">
+  <span>Add to home screen for offline use</span>
+  <button id="install-btn">INSTALL</button>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════
+
+const WEEKS = {
+  1: { range: "12–15", label: "HYPERTROPHY VOLUME", pct: "~60% 1RM" },
+  2: { range: "9–11",  label: "HYPERTROPHY STRENGTH", pct: "~70% 1RM" },
+  3: { range: "6–8",   label: "STRENGTH-SIZE", pct: "~80% 1RM" },
+  4: { range: "3–5",   label: "MAX STRENGTH", pct: "~88% 1RM" },
+};
+
+const ABS = [
+  "Cable Crunch — 3×15–20",
+  "Hanging Leg Raise — 3×12–15",
+  "Ab Wheel Rollout — 3×10–12",
+  "Decline Sit-Up — 3×15–20",
+  "Russian Twist — 3×20 each side",
+  "Plank — 3×45–60s hold",
+  "Dragon Flag — 3×6–8",
+  "Landmine Twist — 3×12 each",
+  "Cable Woodchopper — 3×12 each",
+  "Hollow Body Hold — 3×30s",
+  "Weighted Crunch — 3×15–20",
+  "Toes to Bar — 3×10–12",
+];
+
+// s = sets (working), last set is always the 15-20 burnout
+const DAYS = [
+  {
+    id: "1A", label: "DAY 1A", badge: "QUAD · INCLINE · BI",
+    colorVar: "--red", accentVar: "--red-a",
+    exercises: [
+      { cat: "QUAD",    name: "Leg Extension",                    s: 4 },
+      { cat: "QUAD",    name: "Leg Press",                        s: 4 },
+      { cat: "CHEST",   name: "Hammer Strength Incline Press",    s: 4 },
+      { cat: "CHEST",   name: "Incline DB Press",                 s: 4 },
+      { cat: "CHEST",   name: "Cable Fly (High-to-Low)",          s: 3 },
+      { cat: "BI",      name: "Barbell Curl",                     s: 4 },
+      { cat: "BI",      name: "Incline DB Curl",                  s: 4 },
+    ]
+  },
+  {
+    id: "2A", label: "DAY 2A", badge: "HAM · PULL · TRI",
+    colorVar: "--blue", accentVar: "--blue-a",
+    exercises: [
+      { cat: "HAM",     name: "Seated Hamstring Curl",            s: 4 },
+      { cat: "HAM/GLUTE", name: "Romanian Deadlift (DB)",         s: 4 },
+      { cat: "PULL",    name: "Lat Pulldown (Wide Grip)",         s: 4 },
+      { cat: "PULL",    name: "Seated Row Machine (Wide Grip)",   s: 4 },
+      { cat: "TRI",     name: "Rope Pushdowns",                   s: 4 },
+      { cat: "TRI",     name: "Overhead Cable Triceps Extension", s: 4 },
+    ]
+  },
+  {
+    id: "3A", label: "DAY 3A", badge: "SHOULDER · CALVES · FORE · ABS",
+    colorVar: "--purple", accentVar: "--purple-a",
+    exercises: [
+      { cat: "SHOULDER", name: "Overhead DB Press",               s: 4 },
+      { cat: "SHOULDER", name: "DB Lateral Raise",                s: 4 },
+      { cat: "CALVES",   name: "Standing Calf Raise (Toes Out)",  s: 4 },
+      { cat: "CALVES",   name: "Standing Calf Raise (Toes In)",   s: 3 },
+      { cat: "FOREARM",  name: "Wrist Curl (Barbell)",            s: 3 },
+      { cat: "FOREARM",  name: "Reverse Wrist Curl",              s: 3 },
+    ]
+  },
+  {
+    id: "1B", label: "DAY 1B", badge: "QUAD · FLAT · BI",
+    colorVar: "--red", accentVar: "--red-a",
+    exercises: [
+      { cat: "QUAD",    name: "Leg Extension",                    s: 4 },
+      { cat: "QUAD",    name: "Smith Machine Squat",              s: 4 },
+      { cat: "CHEST",   name: "Hammer Strength Lying Press",      s: 4 },
+      { cat: "CHEST",   name: "Barbell Bench Press",              s: 4 },
+      { cat: "CHEST",   name: "Cable Fly (Low-to-High)",          s: 3 },
+      { cat: "BI",      name: "EZ Bar Curl",                      s: 4 },
+      { cat: "BI",      name: "Cable Curl",                       s: 4 },
+    ]
+  },
+  {
+    id: "2B", label: "DAY 2B", badge: "HAM · PULL · TRI",
+    colorVar: "--blue", accentVar: "--blue-a",
+    exercises: [
+      { cat: "HAM",       name: "Lying Hamstring Curl Machine",   s: 4 },
+      { cat: "HAM/LOWER", name: "Good Morning (Light Barbell)",   s: 3 },
+      { cat: "PULL",      name: "Seated Machine Row (Close Grip)", s: 4 },
+      { cat: "PULL",      name: "Chest-Supported Machine Row",    s: 4 },
+      { cat: "TRI",       name: "Cable Pushdowns",                s: 4 },
+      { cat: "TRI",       name: "DB Overhead Triceps Extension",  s: 4 },
+    ]
+  },
+  {
+    id: "3B", label: "DAY 3B", badge: "SHOULDER · CALVES · FORE · ABS",
+    colorVar: "--purple", accentVar: "--purple-a",
+    exercises: [
+      { cat: "SHOULDER", name: "Seated DB Overhead Press",        s: 4 },
+      { cat: "SHOULDER", name: "Cable Lateral Raise",             s: 4 },
+      { cat: "CALVES",   name: "Seated Calf Raise (Toes Out)",    s: 4 },
+      { cat: "CALVES",   name: "Seated Calf Raise (Toes In)",     s: 3 },
+      { cat: "FOREARM",  name: "Hammer Curl (Forearm Focus)",     s: 3 },
+      { cat: "FOREARM",  name: "Reverse Curl",                    s: 3 },
+    ]
+  },
+];
+
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+
+let state = {
+  week: 1,
+  dayIdx: 0,
+};
+
+function saveState() {
+  localStorage.setItem('ironlog_state', JSON.stringify(state));
+}
+
+function loadState() {
+  try {
+    const s = JSON.parse(localStorage.getItem('ironlog_state'));
+    if (s) state = s;
+  } catch {}
+}
+
+function logKey(week, dayId, exName, setIdx) {
+  return `il:w${week}:${dayId}:${encodeURIComponent(exName)}:s${setIdx}`;
+}
+function noteKey(week, dayId, exName) {
+  return `il_note:w${week}:${dayId}:${encodeURIComponent(exName)}`;
+}
+
+function getLog(week, dayId, exName, setIdx) {
+  try {
+    const v = localStorage.getItem(logKey(week, dayId, exName, setIdx));
+    return v ? JSON.parse(v) : {};
+  } catch { return {}; }
+}
+
+function setLog(week, dayId, exName, setIdx, field, value) {
+  const k = logKey(week, dayId, exName, setIdx);
+  const cur = getLog(week, dayId, exName, setIdx);
+  cur[field] = value;
+  localStorage.setItem(k, JSON.stringify(cur));
+  flashToast();
+  refreshDayTabs();
+}
+
+function getNote(week, dayId, exName) {
+  return localStorage.getItem(noteKey(week, dayId, exName)) || "";
+}
+function setNote(week, dayId, exName, val) {
+  localStorage.setItem(noteKey(week, dayId, exName), val);
+}
+
+function isDayDone(week, dayId) {
+  const day = DAYS.find(d => d.id === dayId);
+  if (!day) return false;
+  return day.exercises.every(ex => {
+    const s = getLog(week, dayId, ex.name, 0);
+    return s.reps;
+  });
+}
+
+function getPrevLog(week, dayId, exName, setIdx) {
+  // Search backwards: same day variant in prior weeks, then alternate day
+  for (let w = week; w >= 1; w--) {
+    for (let di = DAYS.length - 1; di >= 0; di--) {
+      if (w === week && DAYS[di].id === dayId) continue;
+      const d = DAYS[di];
+      if (d.exercises.some(e => e.name === exName)) {
+        const v = getLog(w, d.id, exName, setIdx);
+        if (v.reps) return v;
+      }
+    }
+    // same day
+    if (w < week) {
+      const v = getLog(w, dayId, exName, setIdx);
+      if (v.reps) return v;
+    }
+  }
+  return null;
+}
+
+// ═══════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════
+
+let toastTimer;
+function flashToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 900);
+}
+
+// ═══════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════
+
+function getColor(day) {
+  const map = {
+    '--red': '#c0392b', '--red-a': '#e74c3c',
+    '--blue': '#1a6baa', '--blue-a': '#3498db',
+    '--purple': '#6c3483', '--purple-a': '#9b59b6',
+  };
+  return { color: map[day.colorVar], accent: map[day.accentVar] };
+}
+
+function renderWeekRow() {
+  const el = document.getElementById('week-row');
+  el.innerHTML = '';
+  for (let w = 1; w <= 4; w++) {
+    const btn = document.createElement('button');
+    btn.className = 'wbtn' + (state.week === w ? ' active' : '');
+    const day = DAYS[state.dayIdx];
+    const { color } = getColor(day);
+    if (state.week === w) btn.style.background = color, btn.style.borderColor = color;
+    btn.textContent = `WK${w}`;
+    btn.onclick = () => { state.week = w; saveState(); renderAll(); };
+    el.appendChild(btn);
+  }
+}
+
+function renderRepBanner() {
+  const info = WEEKS[state.week];
+  const day = DAYS[state.dayIdx];
+  const { color, accent } = getColor(day);
+  const banner = document.getElementById('rep-banner');
+  banner.style.background = color + '18';
+  banner.style.border = `1px solid ${color}33`;
+  document.getElementById('rep-label').style.color = accent;
+  document.getElementById('rep-label').textContent = info.label;
+  document.getElementById('rep-range').textContent = info.range + ' reps';
+  document.getElementById('rep-pct').textContent = info.pct;
+}
+
+function renderDayTabs() {
+  const el = document.getElementById('day-tabs');
+  el.innerHTML = '';
+  DAYS.forEach((d, i) => {
+    const { color } = getColor(d);
+    const btn = document.createElement('button');
+    const done = isDayDone(state.week, d.id);
+    btn.className = 'dtab' + (state.dayIdx === i ? ' active' : '') + (done ? ' done' : '');
+    if (state.dayIdx === i) btn.style.background = color, btn.style.borderColor = color;
+    btn.innerHTML = d.id + '<span class="dot"></span>';
+    btn.onclick = () => { state.dayIdx = i; saveState(); renderAll(); };
+    el.appendChild(btn);
+  });
+}
+
+function refreshDayTabs() {
+  document.querySelectorAll('.dtab').forEach((btn, i) => {
+    const done = isDayDone(state.week, DAYS[i].id);
+    btn.classList.toggle('done', done);
+  });
+}
+
+function renderExercises() {
+  const day = DAYS[state.dayIdx];
+  const { color, accent } = getColor(day);
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+
+  // Abs banner
+  const absIdx = ((state.week - 1) * 6 + state.dayIdx) % ABS.length;
+  const absBanner = document.createElement('div');
+  absBanner.className = 'abs-banner';
+  absBanner.innerHTML = `
+    <div class="abs-icon">💪</div>
+    <div>
+      <div class="abs-label">TODAY'S ABS</div>
+      <div class="abs-ex">${ABS[absIdx]}</div>
+    </div>`;
+  main.appendChild(absBanner);
+
+  // Group by category for dividers
+  let lastCat = null;
+
+  day.exercises.forEach((ex, exIdx) => {
+    // Category divider
+    if (ex.cat !== lastCat) {
+      lastCat = ex.cat;
+      const div = document.createElement('div');
+      div.className = 'cat-divider';
+      div.textContent = ex.cat;
+      main.appendChild(div);
+    }
+
+    const card = document.createElement('div');
+    card.className = 'ex-card';
+    card.id = `card-${state.dayIdx}-${exIdx}`;
+
+    // Check if all sets logged
+    const allDone = Array.from({length: ex.s}, (_, si) => getLog(state.week, day.id, ex.name, si)).every(s => s.reps);
+    if (allDone) card.classList.add('complete');
+
+    // Header
+    const top = document.createElement('div');
+    top.className = 'ex-top';
+    top.innerHTML = `
+      <div>
+        <div class="ex-cat" style="color:${accent}">${ex.cat}</div>
+        <div class="ex-name">${ex.name}</div>
+      </div>
+      <div class="ex-sets-badge">${ex.s} sets</div>`;
+    card.appendChild(top);
+
+    // Prev performance (set 0)
+    const prev = getPrevLog(state.week, day.id, ex.name, 0);
+    if (prev && prev.reps) {
+      const p = document.createElement('div');
+      p.className = 'prev-perf';
+      p.textContent = `PREV: ${prev.weight ? prev.weight + ' lbs' : '—'} × ${prev.reps} reps`;
+      card.appendChild(p);
+    }
+
+    // Set header
+    const sh = document.createElement('div');
+    sh.className = 'set-header';
+    sh.innerHTML = '<div>SET</div><div>WEIGHT</div><div>REPS</div><div></div>';
+    card.appendChild(sh);
+
+    // Sets — last set is burnout (15-20)
+    for (let si = 0; si < ex.s; si++) {
+      const isBurnout = si === ex.s - 1;
+      const log = getLog(state.week, day.id, ex.name, si);
+      const prevS = getPrevLog(state.week, day.id, ex.name, si);
+
+      if (isBurnout) {
+        const bl = document.createElement('div');
+        bl.className = 'burnout-label';
+        bl.textContent = '⚡ BURNOUT SET — 15–20 REPS (LIGHTER WEIGHT)';
+        card.appendChild(bl);
+      }
+
+      const row = document.createElement('div');
+      row.className = 'set-row';
+
+      const numEl = document.createElement('div');
+      numEl.className = 'set-num' + (isBurnout ? ' burnout' : '');
+      numEl.textContent = si + 1;
+
+      const wInput = document.createElement('input');
+      wInput.type = 'number';
+      wInput.inputMode = 'decimal';
+      wInput.placeholder = prevS?.weight || 'lbs';
+      wInput.value = log.weight || '';
+      if (log.weight) wInput.classList.add('filled');
+      if (isBurnout) wInput.classList.add('burnout-input');
+      wInput.addEventListener('input', function() {
+        setLog(state.week, day.id, ex.name, si, 'weight', this.value);
+        updateCheck(card, exIdx, si, ex.s, day);
+      });
+
+      const rInput = document.createElement('input');
+      rInput.type = 'number';
+      rInput.inputMode = 'numeric';
+      rInput.placeholder = isBurnout ? '15-20' : (prevS?.reps || WEEKS[state.week].range.split('–')[0]);
+      rInput.value = log.reps || '';
+      if (log.reps) rInput.classList.add('filled');
+      if (isBurnout) rInput.classList.add('burnout-input');
+      rInput.addEventListener('input', function() {
+        setLog(state.week, day.id, ex.name, si, 'reps', this.value);
+        updateCheck(card, exIdx, si, ex.s, day);
+      });
+
+      const checkEl = document.createElement('div');
+      checkEl.className = 'check' + (log.weight && log.reps ? (isBurnout ? ' burnout-done' : ' done') : '');
+      checkEl.id = `chk-${exIdx}-${si}`;
+      checkEl.textContent = (log.weight && log.reps) ? '✓' : '';
+
+      row.appendChild(numEl);
+      row.appendChild(wInput);
+      row.appendChild(rInput);
+      row.appendChild(checkEl);
+      card.appendChild(row);
+    }
+
+    // Volume footer
+    const sets = Array.from({length: ex.s}, (_, si) => getLog(state.week, day.id, ex.name, si));
+    const vol = sets.reduce((sum, s) => sum + ((parseFloat(s.weight)||0) * (parseInt(s.reps)||0)), 0);
+    const filled = sets.filter(s => s.reps).length;
+
+    const vf = document.createElement('div');
+    vf.className = 'vol-footer';
+    vf.innerHTML = `<span>${filled}/${ex.s} sets logged</span><span>Vol: <span>${vol > 0 ? vol.toLocaleString() + ' lbs' : '—'}</span></span>`;
+    card.appendChild(vf);
+
+    // Notes
+    const noteInput = document.createElement('input');
+    noteInput.type = 'text';
+    noteInput.className = 'note-input';
+    noteInput.placeholder = 'Notes: form, feel, variation...';
+    noteInput.value = getNote(state.week, day.id, ex.name);
+    noteInput.addEventListener('input', function() {
+      setNote(state.week, day.id, ex.name, this.value);
+    });
+    card.appendChild(noteInput);
+
+    main.appendChild(card);
+  });
+}
+
+function updateCheck(card, exIdx, si, totalSets, day) {
+  // Re-read and update checkmark
+  const log = getLog(state.week, day.id, DAYS[state.dayIdx].exercises[exIdx].name, si);
+  const isBurnout = si === totalSets - 1;
+  const chk = document.getElementById(`chk-${exIdx}-${si}`);
+  if (!chk) return;
+  const done = log.weight && log.reps;
+  chk.className = 'check' + (done ? (isBurnout ? ' burnout-done' : ' done') : '');
+  chk.textContent = done ? '✓' : '';
+  // Update volume footer
+  const sets = Array.from({length: totalSets}, (_, s) => getLog(state.week, day.id, DAYS[state.dayIdx].exercises[exIdx].name, s));
+  const vol = sets.reduce((sum, s) => sum + ((parseFloat(s.weight)||0) * (parseInt(s.reps)||0)), 0);
+  const filled = sets.filter(s => s.reps).length;
+  const vf = card.querySelector('.vol-footer');
+  if (vf) vf.innerHTML = `<span>${filled}/${totalSets} sets logged</span><span>Vol: <span>${vol > 0 ? vol.toLocaleString() + ' lbs' : '—'}</span></span>`;
+}
+
+function renderAll() {
+  const day = DAYS[state.dayIdx];
+  const { color } = getColor(day);
+  document.getElementById('title-accent').style.color = color;
+  renderWeekRow();
+  renderRepBanner();
+  renderDayTabs();
+  renderExercises();
+}
+
+// ═══════════════════════════════════════════════
+// MODAL — HISTORY
+// ═══════════════════════════════════════════════
+
+function openHistory() {
+  document.getElementById('modal-title-text').textContent = 'HISTORY';
+  const c = document.getElementById('modal-content');
+  c.innerHTML = '';
+  for (let w = 1; w <= 4; w++) {
+    const wDiv = document.createElement('div');
+    wDiv.className = 'hist-week';
+    wDiv.innerHTML = `<div class="hist-week-label">WEEK ${w} — ${WEEKS[w].range} REPS</div>`;
+    DAYS.forEach(d => {
+      const done = isDayDone(w, d.id);
+      const row = document.createElement('div');
+      row.className = 'hist-row' + (done ? ' done' : '');
+      row.innerHTML = `
+        <div class="hist-name">${d.label}</div>
+        <div style="font-size:10px;color:var(--muted);flex:1">${d.badge}</div>
+        <div class="hist-badge">${done ? '✓ DONE' : '—'}</div>`;
+      wDiv.appendChild(row);
+    });
+    c.appendChild(wDiv);
+  }
+  document.getElementById('modal').classList.add('open');
+}
+
+// ═══════════════════════════════════════════════
+// MODAL — SUMMARY
+// ═══════════════════════════════════════════════
+
+function openSummary() {
+  const day = DAYS[state.dayIdx];
+  const { accent } = getColor(day);
+  document.getElementById('modal-title-text').textContent = `${day.label} SUMMARY`;
+  const c = document.getElementById('modal-content');
+  c.innerHTML = `<div style="font-size:10px;font-family:monospace;color:var(--muted);letter-spacing:2px;margin-bottom:14px;">WK${state.week} · ${WEEKS[state.week].range} REPS</div>`;
+
+  let totalVol = 0;
+  day.exercises.forEach(ex => {
+    const sets = Array.from({length: ex.s}, (_, si) => getLog(state.week, day.id, ex.name, si));
+    const vol = sets.reduce((sum, s) => sum + ((parseFloat(s.weight)||0) * (parseInt(s.reps)||0)), 0);
+    totalVol += vol;
+    const div = document.createElement('div');
+    div.className = 'sum-ex';
+    div.innerHTML = `<div class="sum-ex-name"><span>${ex.name}</span><span style="color:${accent};font-size:12px">${ex.cat}</span></div>`;
+    sets.forEach((s, si) => {
+      const isBurnout = si === ex.s - 1;
+      const row = document.createElement('div');
+      row.className = 'sum-set-row';
+      row.innerHTML = `
+        <span style="color:${isBurnout ? 'var(--gold)' : 'var(--muted)'}">SET ${si+1}${isBurnout ? ' ⚡' : ''}</span>
+        <span>${s.weight ? s.weight + ' lbs' : '—'}</span>
+        <span>${s.reps ? s.reps + ' reps' : '—'}</span>`;
+      div.appendChild(row);
+    });
+    if (vol > 0) {
+      const vl = document.createElement('div');
+      vl.className = 'sum-vol';
+      vl.textContent = `Volume: ${vol.toLocaleString()} lbs`;
+      div.appendChild(vl);
+    }
+    c.appendChild(div);
+  });
+
+  if (totalVol > 0) {
+    const tot = document.createElement('div');
+    tot.style.cssText = 'margin-top:16px;padding-top:12px;border-top:1px solid var(--border);font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:900;display:flex;justify-content:space-between;';
+    tot.innerHTML = `<span>TOTAL VOLUME</span><span style="color:var(--gold)">${totalVol.toLocaleString()} lbs</span>`;
+    c.appendChild(tot);
+  }
+
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+}
+
+// close modal on backdrop click
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ═══════════════════════════════════════════════
+// PWA INSTALL
+// ═══════════════════════════════════════════════
+
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const banner = document.getElementById('install-banner');
+  banner.style.display = 'flex';
+});
+
+document.getElementById('install-btn').addEventListener('click', async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    document.getElementById('install-banner').style.display = 'none';
+  }
+});
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+
+loadState();
+renderAll();
+</script>
+</body>
+</html>
