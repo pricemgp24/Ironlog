@@ -682,7 +682,7 @@ function appendRow(el,day,ex,i,isBurn){
 
 function onInp(inp){
   var d=inp.getAttribute('data-d'),e=inp.getAttribute('data-e'),
-      i=inp.getAttribute('data-i'),f=inp.getAttribute('data-f');
+      i=parseInt(inp.getAttribute('data-i')),f=inp.getAttribute('data-f');
   var key=lk(CW,d,e,i);
   var saved=JSON.parse(localStorage.getItem(key)||'{}');
   saved[f]=inp.value;
@@ -690,11 +690,18 @@ function onInp(inp){
   updateDone(d,e,i);
   updateVF(d,e);
   checkPR(d,e);
-  // burnout status
-  if(f==='r') updateBurnStat(d,e,i,inp.value);
+  // only trigger burnout status on the actual final burnout set
+  if(f==='r'){
+    var exDef=EXS.filter(function(x){return x[0]===d&&x[1]===e;})[0];
+    var isBurnoutSet = exDef && exDef[3] && i===(exDef[2]-1);
+    if(isBurnoutSet) updateBurnStat(d,e,i,inp.value);
+  }
 }
 
 function updateBurnStat(d,e,i,rVal){
+  // safety check — never show burnout feedback on a non-burnout set
+  var exDef=EXS.filter(function(x){return x[0]===d&&x[1]===e;})[0];
+  if(!exDef||!exDef[3]||parseInt(i)!==(exDef[2]-1)) return;
   var existing=document.getElementById('bstat-'+d+'-'+e+'-'+i);
   if(existing)existing.remove();
   var r=parseInt(rVal);
@@ -705,11 +712,14 @@ function updateBurnStat(d,e,i,rVal){
   if(r>=20){stat.style.color='var(--green2)';stat.textContent='✅ CRUSHED — top of range';}
   else if(r>=15){stat.style.color='var(--od)';stat.textContent='✔ HIT — within range ('+r+'/20)';}
   else{stat.style.color='var(--red2)';stat.textContent='↑ SHORT — need '+(15-r)+' more reps';}
-  var row=document.querySelector('[data-d="'+d+'"][data-e="'+e+'"][data-i="'+i+'"][data-f="r"]');
-  if(row&&row.parentNode&&row.parentNode.nextSibling){
-    var setRow=row.closest('.set-r');
-    if(setRow&&setRow.nextSibling)setRow.parentNode.insertBefore(stat,setRow.nextSibling);
-    else document.getElementById('sl-'+d+'-'+e).appendChild(stat);
+  var setRow=document.querySelector('[data-d="'+d+'"][data-e="'+e+'"][data-i="'+i+'"][data-f="r"]');
+  if(setRow){
+    setRow=setRow.closest('.set-r');
+    if(setRow&&setRow.nextSibling){
+      setRow.parentNode.insertBefore(stat,setRow.nextSibling);
+    } else if(setRow){
+      setRow.parentNode.appendChild(stat);
+    }
   }
 }
 
@@ -756,13 +766,19 @@ function updateVF(d,e){
 }
 
 function restoreVals(day,ex,n){
+  var exDef=EXS.filter(function(x){return x[0]===day&&x[1]===ex;})[0];
   for(var i=0;i<n+3;i++){
     var saved=JSON.parse(localStorage.getItem(lk(CW,day,ex,i))||'{}');
     if(saved.w||saved.r){
       var wi=document.querySelector('[data-d="'+day+'"][data-e="'+ex+'"][data-i="'+i+'"][data-f="w"]');
       var ri=document.querySelector('[data-d="'+day+'"][data-e="'+ex+'"][data-i="'+i+'"][data-f="r"]');
       if(wi&&saved.w)wi.value=saved.w;
-      if(ri&&saved.r){ri.value=saved.r;updateBurnStat(day,ex,i,saved.r);}
+      if(ri&&saved.r){
+        ri.value=saved.r;
+        // only show burnout status on the actual burnout set
+        var isBurnoutSet = exDef && exDef[3] && i===(exDef[2]-1);
+        if(isBurnoutSet) updateBurnStat(day,ex,i,saved.r);
+      }
       updateDone(day,ex,i);
     }
   }
