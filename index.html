@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AFT PEAK PROGRAM</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>AFT PEAK PROGRAM v4</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -623,7 +626,8 @@ function buildAllSets(){
 function buildSets(day,ex,n,hasBurnout){
   var el=document.getElementById('sl-'+day+'-'+ex);
   if(!el)return;
-  // header
+  // nuke any stale bstat elements from old versions still in DOM
+  el.querySelectorAll('.burn-stat').forEach(function(s){s.remove();});
   var hdr=document.createElement('div');
   hdr.className='col-hdr';
   hdr.innerHTML='<span>SET</span><span>LBS</span><span>REPS</span><span>PREV</span><span>✓</span>';
@@ -672,10 +676,10 @@ function appendRow(el,day,ex,i,isBurn){
   r.className='set-r';r.setAttribute('data-si',i);
   r.innerHTML=
     '<div class="s-num">S'+(i+1)+'</div>'+
-    '<input class="s-input" type="number" placeholder="lbs" data-d="'+day+'" data-e="'+ex+'" data-i="'+i+'" data-f="w" oninput="onInp(this)">'+
-    '<input class="s-input" type="number" placeholder="reps" data-d="'+day+'" data-e="'+ex+'" data-i="'+i+'" data-f="r" oninput="onInp(this)">'+
+    '<input class="s-input" type="number" placeholder="lbs" data-d="'+day+'" data-e="'+ex+'" data-i="'+i+'" data-f="w" data-burn="'+(isBurn?'1':'0')+'" oninput="onInp(this)">'+
+    '<input class="s-input" type="number" placeholder="reps" data-d="'+day+'" data-e="'+ex+'" data-i="'+i+'" data-f="r" data-burn="'+(isBurn?'1':'0')+'" oninput="onInp(this)">'+
     '<div class="prev-col'+(hasP?'':' empty')+'">'+pt+'</div>'+
-    '<button class="s-done" id="sd-'+day+'-'+ex+'-'+i+'" onclick="toggleDone(this)">✓</button>';
+    '<button class="s-done" id="sd-'+day+'-'+ex+'-'+i+'" data-burn="'+(isBurn?'1':'0')+'" onclick="toggleDone(this)">✓</button>';
   var ab=el.querySelector('.add-set');
   if(ab)el.insertBefore(r,ab);else el.appendChild(r);
 }
@@ -683,19 +687,16 @@ function appendRow(el,day,ex,i,isBurn){
 function onInp(inp){
   var d=inp.getAttribute('data-d'),e=inp.getAttribute('data-e'),
       i=parseInt(inp.getAttribute('data-i')),f=inp.getAttribute('data-f');
+  var isBurn=inp.getAttribute('data-burn')==='1';
   var key=lk(CW,d,e,i);
   var saved=JSON.parse(localStorage.getItem(key)||'{}');
   saved[f]=inp.value;
   localStorage.setItem(key,JSON.stringify(saved));
-  updateDone(d,e,i);
+  updateDone(d,e,i,isBurn);
   updateVF(d,e);
   checkPR(d,e);
-  // only trigger burnout status on the actual final burnout set
-  if(f==='r'){
-    var exDef=EXS.filter(function(x){return x[0]===d&&x[1]===e;})[0];
-    var isBurnoutSet = exDef && exDef[3] && i===(exDef[2]-1);
-    if(isBurnoutSet) updateBurnStat(d,e,i,inp.value);
-  }
+  // only show burnout feedback if this is literally the burnout set
+  if(f==='r' && isBurn) updateBurnStat(d,e,i,inp.value);
 }
 
 function updateBurnStat(d,e,i,rVal){
@@ -723,20 +724,18 @@ function updateBurnStat(d,e,i,rVal){
   }
 }
 
-function updateDone(d,e,i){
+function updateDone(d,e,i,isBurn){
   var key=lk(CW,d,e,i);
   var saved=JSON.parse(localStorage.getItem(key)||'{}');
   var btn=document.getElementById('sd-'+d+'-'+e+'-'+i);
   if(!btn)return;
+  // if isBurn not passed, read from the button's data-burn attribute
+  if(isBurn===undefined) isBurn=btn.getAttribute('data-burn')==='1';
   if(saved.w&&saved.r){
-    var exDef=EXS.filter(function(x){return x[0]===d&&x[1]===e;})[0];
-    var isBurn=exDef&&exDef[3]&&parseInt(i)===(exDef[2]-1);
     if(isBurn){
-      // burnout set — color based on whether 15-20 range was hit
       var r=parseInt(saved.r);
       btn.className=r>=15?'s-done burn-done':'s-done burn-short';
     } else {
-      // working set — always plain green, no rep range check
       btn.className='s-done done';
     }
     btn.textContent='✓';
@@ -922,6 +921,13 @@ function updateProgress(){
 }
 
 // ── BOOT ──────────────────────────────────────────────────────────────────────
+// One-time migration: clear any stale bstat DOM and flag old version data
+if(!localStorage.getItem('aft_v4')){
+  // Remove any old bstat keys if somehow persisted
+  localStorage.setItem('aft_v4','1');
+}
+// Purge any stale burn-stat elements from old cached versions
+document.querySelectorAll('.burn-stat').forEach(function(s){s.remove();});
 updateProgress();
 restoreDayBtns();
 buildAllSets();
