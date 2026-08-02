@@ -719,18 +719,20 @@ function updateDone(d,e,i){
   var btn=document.getElementById('sd-'+d+'-'+e+'-'+i);
   if(!btn)return;
   if(saved.w&&saved.r){
-    var r=parseInt(saved.r);
-    // check if this is a burnout set
     var exDef=EXS.filter(function(x){return x[0]===d&&x[1]===e;})[0];
-    var isBurn=exDef&&exDef[3]&&parseInt(i)===exDef[2]-1;
+    var isBurn=exDef&&exDef[3]&&parseInt(i)===(exDef[2]-1);
     if(isBurn){
+      // burnout set — color based on whether 15-20 range was hit
+      var r=parseInt(saved.r);
       btn.className=r>=15?'s-done burn-done':'s-done burn-short';
     } else {
+      // working set — always plain green, no rep range check
       btn.className='s-done done';
     }
     btn.textContent='✓';
   } else {
-    btn.className='s-done';btn.textContent='✓';
+    btn.className='s-done';
+    btn.textContent='✓';
   }
 }
 
@@ -803,11 +805,19 @@ function checkPR(d,e){
 
 // ── DAY NAVIGATION ────────────────────────────────────────────────────────────
 var ALL_DAYS=['mon','tue','wed','thu','fri','sat','sun'];
+var currentDay = localStorage.getItem('aft_day')||'mon';
+
 function showDay(id,btn){
   ALL_DAYS.forEach(function(d){var el=document.getElementById('day-'+d);if(el)el.style.display='none';});
   document.querySelectorAll('.dbt').forEach(function(b){b.classList.remove('active');});
   var el=document.getElementById('day-'+id);if(el)el.style.display='block';
   if(btn)btn.classList.add('active');
+  else {
+    var tab=document.getElementById('dtb-'+id);
+    if(tab)tab.classList.add('active');
+  }
+  currentDay=id;
+  localStorage.setItem('aft_day',id);
 }
 
 // ── MARK DAY ─────────────────────────────────────────────────────────────────
@@ -855,6 +865,8 @@ wkMeta.forEach(function(w,i){
       if(sl){sl.innerHTML='';}
       buildSets(e[0],e[1],e[2],e[3]);
     });
+    // stay on same day after week change
+    showDay(currentDay, null);
   };})(i+1,btn);
   grid.appendChild(btn);
 });
@@ -897,6 +909,8 @@ function updateProgress(){
 updateProgress();
 restoreDayBtns();
 buildAllSets();
+// Restore last active day — fixes Brave/mobile browser reload issue
+showDay(currentDay, null);
 </script>
 </body>
 </html>
