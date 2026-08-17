@@ -84,6 +84,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;max
 .ex-card{background:var(--bg2);border:1px solid var(--border);border-radius:7px;margin-bottom:7px;overflow:hidden;}
 .ex-top{padding:9px 12px 7px;display:flex;justify-content:space-between;align-items:flex-start;gap:6px;border-bottom:1px solid var(--border);}
 .ex-left{flex:1;}
+.ex-rx{background:rgba(200,168,64,0.08);border:1px solid rgba(200,168,64,0.2);border-radius:4px;padding:4px 8px;font-size:9px;font-weight:700;color:var(--od);font-family:'DM Mono',monospace;white-space:nowrap;flex-shrink:0;text-align:center;line-height:1.4;letter-spacing:0.5px;}
 .ex-cat{font-size:7px;letter-spacing:3px;font-weight:700;text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:2px;}
 .ex-name{font-size:14px;font-weight:700;color:var(--text);line-height:1.2;}
 .pr-badge{font-size:8px;font-weight:700;padding:2px 5px;border-radius:3px;background:rgba(200,168,64,0.15);color:var(--od);margin-left:5px;display:none;font-family:'DM Mono',monospace;}
@@ -234,12 +235,15 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;max
   <div class="day-hdr"><div class="dh-left"><div class="dh-day">Wednesday</div><div class="dh-name" style="color:var(--od);">CHEST + TRICEPS</div><div class="dh-meta">Mid-week — less crowded · ~55 min + 30 cardio</div></div><button class="mark-btn" id="mb-wed" onclick="markDay('wed')">MARK DONE</button></div>
   <div class="wu"><div class="wu-t">⚡ Warmup 5 Min</div><div class="wu-i">Band pull-apart 2×20</div><div class="wu-i">Light chest press machine 1×15</div><div class="wu-i">Arm circles</div></div>
   <div class="sec" style="color:var(--od);">Chest</div>
-  <div class="ex-card"><div class="ex-top"><div class="ex-left"><div class="ex-cat" style="color:var(--od);">CHEST · INCLINE</div><div class="ex-name">Smith Machine Incline Press <span class="pr-badge" id="pr-wed-smi">🏆</span></div></div></div><div class="set-log" id="sl-wed-smi"></div><div class="ex-note-wrap"><div class="note">30–45° incline. Upper chest priority. Full range.</div></div></div>
+  <div class="ex-card"><div class="ex-top"><div class="ex-left"><div class="ex-cat" style="color:var(--od);">CHEST · INCLINE</div><div class="ex-name">Incline DB Press <span class="pr-badge" id="pr-wed-idp">🏆</span></div></div></div><div class="set-log" id="sl-wed-idp"></div><div class="ex-note-wrap"><div class="note">30–45° angle. Full stretch at bottom. Upper chest builder — go heavy since delts are fresh today.</div></div></div>
   <div class="ex-card"><div class="ex-top"><div class="ex-left"><div class="ex-cat" style="color:var(--od);">CHEST · FLAT</div><div class="ex-name">DB Flat Bench Press <span class="pr-badge" id="pr-wed-dbf">🏆</span></div></div></div><div class="set-log" id="sl-wed-dbf"></div><div class="ex-note-wrap"><div class="note">Full stretch at bottom. DB bench avoids packed barbell stations.</div></div></div>
   <div class="ex-card"><div class="ex-top"><div class="ex-left"><div class="ex-cat" style="color:var(--od);">CHEST · CABLE</div><div class="ex-name">Cable Fly High-to-Low <span class="pr-badge" id="pr-wed-cfl">🏆</span></div></div></div><div class="set-log" id="sl-wed-cfl"></div><div class="ex-note-wrap"><div class="note">Cables high, arc down. Constant tension. Best shaping exercise.</div></div></div>
   <div class="sec" style="color:var(--od);">Triceps</div>
   <div class="ex-card"><div class="ex-top"><div class="ex-left"><div class="ex-cat" style="color:var(--blue2);">TRI · ROPE</div><div class="ex-name">Cable Rope Pushdown <span class="pr-badge" id="pr-wed-rpd">🏆</span></div></div></div><div class="set-log" id="sl-wed-rpd"></div><div class="ex-note-wrap"><div class="note">Elbows pinned. Push down and out. Full lockout.</div></div></div>
   <div class="ex-card"><div class="ex-top"><div class="ex-left"><div class="ex-cat" style="color:var(--blue2);">TRI · OH</div><div class="ex-name">OH Cable Tricep Extension <span class="pr-badge" id="pr-wed-oht">🏆</span></div></div></div><div class="set-log" id="sl-wed-oht"></div><div class="ex-note-wrap"><div class="note">Rope, face away, elbows by ears. Long head stretch. Best tri mass builder.</div></div></div>
+  <div class="sec" style="color:var(--red2);">Core — Wed Session</div>
+  <div class="ex-card"><div class="ex-top"><div class="ex-left"><div class="ex-cat" style="color:var(--red2);">OBLIQUE · LOW-HIGH</div><div class="ex-name">Cable Woodchop Low-to-High <span class="pr-badge" id="pr-wed-wlo">🏆</span></div></div></div><div class="set-log" id="sl-wed-wlo"></div><div class="ex-note-wrap"><div class="note">Cable low, pull diagonally upward. Opposite of Monday's high-to-low — trains the other oblique angle. 12 each side.</div></div></div>
+  <div class="ex-card"><div class="ex-top"><div class="ex-left"><div class="ex-cat" style="color:var(--red2);">CORE · LOWER ABS</div><div class="ex-name">Hanging Knee Raise <span class="pr-badge" id="pr-wed-hkr">🏆</span></div></div></div><div class="set-log" id="sl-wed-hkr"></div><div class="ex-note-wrap"><div class="note">Dead hang, knees to chest, slow descent. Add a twist — knees left then right for obliques. If no bar, do cable crunch instead. 15 reps.</div></div></div>
   <div class="cardio-block">
     <div class="cdb-title">🏃 30-Min Cardio Finish</div>
     <div class="cdb-sub">Wednesday — VO2 Max Intervals · The biggest 2-mile mover</div>
@@ -277,6 +281,9 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;max
   <div class="sec" style="color:var(--red2);">Power + Carry</div>
   <div class="ex-card"><div class="ex-top"><div class="ex-left"><div class="ex-cat" style="color:var(--red2);">POWER</div><div class="ex-name">Box Jump Max Intent <span class="pr-badge" id="pr-fri-bj">🏆</span></div></div></div><div class="set-log" id="sl-fri-bj"></div><div class="ex-note-wrap"><div class="note">Full reset between reps. Max intent every rep. Step down — never jump down.</div></div></div>
   <div class="ex-card"><div class="ex-top"><div class="ex-left"><div class="ex-cat" style="color:var(--red2);">POSTERIOR</div><div class="ex-name">DB Romanian Deadlift <span class="pr-badge" id="pr-fri-rdl">🏆</span></div></div></div><div class="set-log" id="sl-fri-rdl"></div><div class="ex-note-wrap"><div class="note">Heaviest DBs. Hip hinge, feel hamstring stretch. Posterior chain = DL + run.</div></div></div>
+  <div class="sec" style="color:var(--red2);">Core — Fri Session</div>
+  <div class="ex-card"><div class="ex-top"><div class="ex-left"><div class="ex-cat" style="color:var(--red2);">OBLIQUE · ROTATION</div><div class="ex-name">Landmine Rotation or Cable Twist <span class="pr-badge" id="pr-fri-lrc">🏆</span></div></div></div><div class="set-log" id="sl-fri-lrc"></div><div class="ex-note-wrap"><div class="note">If landmine available: bar in corner, both hands, rotate hip to hip. If not: cable at chest height, stand sideways, rotate away. 15 each side. <strong>Different rotation plane than Mon and Wed — all three core days hit obliques from different angles.</strong></div></div></div>
+  <div class="ex-card"><div class="ex-top"><div class="ex-left"><div class="ex-cat" style="color:var(--red2);">CORE · ENDURANCE</div><div class="ex-name">Dead Bug or Plank — Carry Brace <span class="pr-badge" id="pr-fri-dbc">🏆</span></div></div></div><div class="set-log" id="sl-fri-dbc"></div><div class="ex-note-wrap"><div class="note">Dead bug: back flat on floor, opposite arm and leg extend, hold core braced. 20 reps alternating. Or plank 3×30 sec. <strong>This trains the exact bracing pattern used during the sandbag carry.</strong></div></div></div>
   <div class="cond-block">
     <div class="cb-title">🎒 Sandbag Carry Protocol — Track/Turf</div>
     <div class="cb-sub">85–95lb sandbag · Real load, real distance</div>
@@ -334,32 +341,45 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;max
 </div>
 
 <script>
-var CW=parseInt(localStorage.getItem('af5_wk')||'1');
-var DONE=JSON.parse(localStorage.getItem('af5_done_'+CW)||'[]');
-var TOTAL=parseInt(localStorage.getItem('af5_total')||'0');
-var currentDay=localStorage.getItem('af5_day')||'mon';
+var CW=parseInt(localStorage.getItem('af6_wk')||'1');
+var DONE=JSON.parse(localStorage.getItem('af6_done_'+CW)||'[]');
+var TOTAL=parseInt(localStorage.getItem('af6_total')||'0');
+var currentDay=localStorage.getItem('af6_day')||'mon';
 
 var EXS=[
-  ['mon','ohp',4,true],['mon','clr',4,true],['mon','cfp',3,false],
-  ['mon','arm',3,false],
-  ['mon','wch',3,false],['mon','pal',3,false],['mon','ctc',3,false],
-  ['tue','dl',4,false],['tue','lp',4,true],['tue','le',4,true],
-  ['tue','lc',4,true],['tue','ht',3,false],
-  ['wed','smi',4,true],['wed','dbf',4,true],['wed','cfl',3,false],
-  ['wed','rpd',4,true],['wed','oht',3,false],
-  ['thu','lpd',4,true],['thu','csr',4,true],['thu','scr',3,false],['thu','sap',3,false],
-  ['thu','bic',3,false],
-  ['fri','dlp',3,false],['fri','bj',4,false],['fri','rdl',3,false],
+  ['mon','ohp',4,true,'3×12-14 +BURN'],['mon','clr',4,true,'3×12-15 +BURN'],['mon','cfp',3,false,'3×15-20'],
+  ['mon','arm',3,false,'3×10-12 SS'],
+  ['mon','wch',3,false,'3×12 each'],['mon','pal',3,false,'3×10 each'],['mon','ctc',3,false,'3×15 each'],
+  ['tue','dl',4,false,'4×6 @70%'],['tue','lp',4,true,'3×12-14 +BURN'],['tue','le',4,true,'3×12-14 +BURN'],
+  ['tue','lc',4,true,'3×12-14 +BURN'],['tue','ht',3,false,'3×12-15'],
+  ['wed','idp',4,true,'3×12-14 +BURN'],['wed','dbf',4,true,'3×12-14 +BURN'],['wed','cfl',3,false,'3×12-15'],
+  ['wed','rpd',4,true,'3×12-14 +BURN'],['wed','oht',3,false,'3×12-15'],
+  ['wed','wlo',3,false,'3×12 each'],['wed','hkr',3,false,'3×15'],
+  ['thu','lpd',4,true,'3×12-14 +BURN'],['thu','csr',4,true,'3×12-14 +BURN'],['thu','scr',3,false,'3×12-14'],['thu','sap',3,false,'3×12-15'],
+  ['thu','bic',3,false,'3×10-12 SS'],
+  ['fri','dlp',3,false,'See Rx'],['fri','bj',4,false,'4×4 MAX'],['fri','rdl',3,false,'3×10-12'],
+  ['fri','lrc',3,false,'3×15 each'],['fri','dbc',3,false,'3×20'],
 ];
 
-function lk(w,d,e,s){return 'af5:w'+w+':'+d+':'+e+':s'+s;}
+function lk(w,d,e,s){return 'af6:w'+w+':'+d+':'+e+':s'+s;}
 
-function buildAllSets(){EXS.forEach(function(e){buildSets(e[0],e[1],e[2],e[3]);});}
+function buildAllSets(){EXS.forEach(function(e){buildSets(e[0],e[1],e[2],e[3],e[4]||'');});}
 
-function buildSets(day,ex,n,hasBurnout){
+function buildSets(day,ex,n,hasBurnout,rxText){
   var el=document.getElementById('sl-'+day+'-'+ex);
   if(!el)return;
   el.querySelectorAll('.burn-stat').forEach(function(s){s.remove();});
+  // Insert rep range badge into the ex-top area
+  var card=el.closest('.ex-card');
+  if(card&&rxText){
+    var top=card.querySelector('.ex-top');
+    if(top&&!top.querySelector('.ex-rx')){
+      var rxBadge=document.createElement('div');
+      rxBadge.className='ex-rx';
+      rxBadge.textContent=rxText;
+      top.appendChild(rxBadge);
+    }
+  }
   var hdr=document.createElement('div');hdr.className='col-hdr';
   hdr.innerHTML='<span>SET</span><span>LBS</span><span>REPS</span><span>PREV</span><span>✓</span>';
   el.appendChild(hdr);
@@ -497,7 +517,7 @@ function showDay(id,btn){
   var el=document.getElementById('day-'+id);if(el)el.style.display='block';
   if(btn)btn.classList.add('active');
   else{var t=document.getElementById('dtb-'+id);if(t)t.classList.add('active');}
-  currentDay=id;localStorage.setItem('af5_day',id);
+  currentDay=id;localStorage.setItem('af6_day',id);
 }
 
 function markDay(dayId){
@@ -505,18 +525,18 @@ function markDay(dayId){
   var idx=DONE.indexOf(dayId);
   if(idx>-1){DONE.splice(idx,1);if(mb){mb.classList.remove('done');mb.textContent='MARK DONE';}if(tab)tab.classList.remove('done-d');TOTAL=Math.max(0,TOTAL-1);}
   else{DONE.push(dayId);if(mb){mb.classList.add('done');mb.textContent='✓ DONE';}if(tab)tab.classList.add('done-d');TOTAL++;}
-  localStorage.setItem('af5_done_'+CW,JSON.stringify(DONE));localStorage.setItem('af5_total',TOTAL);updateProgress();
+  localStorage.setItem('af6_done_'+CW,JSON.stringify(DONE));localStorage.setItem('af6_total',TOTAL);updateProgress();
 }
 
 var grid=document.getElementById('week-grid');
 [{n:'WK1'},{n:'WK2'},{n:'WK3'},{n:'WK4'},{n:'WK5'},{n:'WK6'}].forEach(function(w,i){
   var btn=document.createElement('button');btn.className='wbtn'+(i+1===CW?' active':'');btn.textContent=w.n;
   btn.onclick=(function(wk,el){return function(){
-    CW=wk;localStorage.setItem('af5_wk',CW);
-    DONE=JSON.parse(localStorage.getItem('af5_done_'+CW)||'[]');
+    CW=wk;localStorage.setItem('af6_wk',CW);
+    DONE=JSON.parse(localStorage.getItem('af6_done_'+CW)||'[]');
     document.querySelectorAll('.wbtn').forEach(function(b){b.classList.remove('active');});el.classList.add('active');
     updateProgress();restoreDayBtns();
-    EXS.forEach(function(e){var sl=document.getElementById('sl-'+e[0]+'-'+e[1]);if(sl)sl.innerHTML='';buildSets(e[0],e[1],e[2],e[3]);});
+    EXS.forEach(function(e){var sl=document.getElementById('sl-'+e[0]+'-'+e[1]);if(sl)sl.innerHTML='';var card=sl?sl.closest('.ex-card'):null;if(card){var rxb=card.querySelector('.ex-rx');if(rxb)rxb.remove();}buildSets(e[0],e[1],e[2],e[3],e[4]||'');});
     showDay(currentDay,null);
   };})(i+1,btn);
   grid.appendChild(btn);
