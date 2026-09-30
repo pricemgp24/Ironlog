@@ -1,549 +1,472 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<title>IRON &amp; FAST v6</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IRON HYBRID</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;900&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
 <style>
-:root{--bg:#07080a;--bg2:#0d0f12;--bg3:#121518;--border:#1c2028;--text:#e8eaf0;--muted:#7a8090;--dim:#3a4050;--od:#c8a840;--od2:#a88020;--od3:#806010;--red:#c03828;--red2:#e04838;--blue:#3068b0;--blue2:#4888d0;--green:#287840;--green2:#38a858;--teal:#16a085;--white:#f0f2f8;}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;max-width:520px;margin:0 auto;padding-bottom:80px;}
-.cover{position:relative;overflow:hidden;padding:26px 18px 18px;background:linear-gradient(160deg,#0a0c0f,#080a0d);border-bottom:2px solid var(--od3);}
-.cover::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(200,168,64,0.015) 40px,rgba(200,168,64,0.015) 41px),repeating-linear-gradient(0deg,transparent,transparent 40px,rgba(200,168,64,0.015) 40px,rgba(200,168,64,0.015) 41px);}
-.cover *{position:relative;z-index:1;}
-.branch{font-size:8px;letter-spacing:5px;color:var(--od);font-family:'DM Mono',monospace;margin-bottom:6px;text-transform:uppercase;}
-.cover h1{font-family:'Barlow Condensed',sans-serif;font-size:44px;font-weight:900;line-height:0.95;margin-bottom:5px;}
-.cover h1 .l1{color:var(--white);}.cover h1 .l2{color:var(--od);}
-.cover .sub{font-size:9px;color:var(--muted);line-height:1.7;margin-bottom:12px;font-family:'DM Mono',monospace;}
-.glbl{font-size:7px;letter-spacing:3px;color:var(--dim);font-family:'DM Mono',monospace;text-transform:uppercase;margin-bottom:3px;}
-.srow{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:8px;}
-.sc,.tc{border-radius:4px;padding:6px 4px;text-align:center;}
-.sc{background:rgba(200,168,64,0.07);border:1px solid rgba(200,168,64,0.18);}
-.tc{background:rgba(48,104,176,0.08);border:1px solid rgba(72,136,208,0.2);}
-.sc .sv,.tc .sv{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;line-height:1;}
-.sc .sv{color:var(--od);}.tc .sv{color:var(--blue2);}
-.sc .sk,.tc .sk{font-size:7px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:1px;text-transform:uppercase;margin-top:1px;}
-.macro-row{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:8px;}
-.mc{background:rgba(22,160,133,0.07);border:1px solid rgba(22,160,133,0.2);border-radius:4px;padding:6px 4px;text-align:center;}
-.mc .sv{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;color:var(--teal);line-height:1;}
-.mc .sk{font-size:7px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:1px;text-transform:uppercase;margin-top:1px;}
-.tl{display:grid;grid-template-columns:3fr 1fr 1fr 1fr;gap:0;border-bottom:1px solid var(--border);}
-.tl-c{padding:8px 6px;text-align:center;border-right:1px solid var(--border);font-size:8px;font-family:'DM Mono',monospace;letter-spacing:1px;}
-.tl-c:last-child{border-right:none;}
-.tl-c .tw{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;display:block;line-height:1;margin-bottom:1px;}
-.tl-b{background:rgba(200,168,64,0.06);color:var(--od);}
-.tl-p{background:rgba(224,72,56,0.06);color:var(--red2);}
-.tl-s{background:rgba(48,104,176,0.06);color:var(--blue2);}
-.tl-t{background:rgba(40,120,64,0.06);color:var(--green2);}
-.wsel{background:var(--bg2);border-bottom:1px solid var(--border);padding:7px 12px;}
-.wsg{display:grid;grid-template-columns:repeat(6,1fr);gap:3px;}
-.wbtn{padding:5px 2px;border-radius:3px;font-size:9px;font-weight:700;font-family:'DM Mono',monospace;border:1px solid var(--border);background:var(--bg3);color:var(--dim);cursor:pointer;text-align:center;}
-.wbtn.active{background:var(--od3);border-color:var(--od);color:var(--od);}
-.wprog{padding:7px 14px;background:var(--bg2);border-bottom:1px solid var(--border);}
-.wpr{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
-.wpl{font-size:7px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;font-family:'DM Mono',monospace;}
-.wpc{font-size:9px;color:var(--od);font-weight:700;font-family:'DM Mono',monospace;}
-.wpb{height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
-.wpf{height:100%;background:linear-gradient(90deg,var(--od3),var(--od));border-radius:2px;transition:width 0.4s;}
-.wpd{display:flex;gap:3px;margin-top:7px;}
-.wpdt{flex:1;height:4px;border-radius:2px;background:var(--border);}
-.wpdt.done{background:var(--od);}
-.wpdt span{position:absolute;top:6px;left:50%;transform:translateX(-50%);font-size:6px;color:var(--muted);font-family:'DM Mono',monospace;}
-.wpdt{position:relative;}
-.dbar{display:flex;overflow-x:auto;background:var(--bg2);border-bottom:1px solid var(--border);scrollbar-width:none;}
-.dbar::-webkit-scrollbar{display:none;}
-.dbt{padding:8px 11px;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--dim);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;flex-shrink:0;text-transform:uppercase;background:none;border-left:none;border-right:none;border-top:none;font-family:'DM Mono',monospace;}
-.dbt.active{color:var(--od);border-bottom-color:var(--od);}
-.dbt.done-d{color:var(--green2);}
-.page{display:none;padding:10px 12px;}
-.page.active{display:block;}
-.dhdr{background:linear-gradient(135deg,var(--bg3),#0a0c10);border:1px solid var(--border);border-radius:7px;padding:10px 12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
-.dhl .dhd{font-size:7px;letter-spacing:4px;color:var(--muted);font-family:'DM Mono',monospace;text-transform:uppercase;margin-bottom:1px;}
-.dhl .dhn{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;letter-spacing:1px;line-height:1;}
-.dhl .dhm{font-size:8px;color:var(--muted);margin-top:2px;font-family:'DM Mono',monospace;}
-.mbtn{padding:5px 10px;border-radius:14px;border:1px solid var(--border);background:var(--bg);color:var(--muted);font-size:9px;font-weight:700;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:1px;}
-.mbtn.done{background:var(--green);border-color:var(--green2);color:var(--white);}
-.sec{font-size:7px;font-weight:700;letter-spacing:4px;color:var(--dim);padding:8px 0 5px;display:flex;align-items:center;gap:7px;text-transform:uppercase;font-family:'DM Mono',monospace;}
-.sec::after{content:'';flex:1;height:1px;background:var(--border);}
-.rx{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:7px 9px;margin-bottom:7px;}
-.rxt{font-size:6px;letter-spacing:3px;color:var(--od);font-weight:700;text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:5px;}
-.rxr{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--border);font-size:10px;}
-.rxr:last-child{border-bottom:none;}
-.rxk{color:var(--muted);font-size:9px;}
-.rxv{font-weight:700;color:var(--text);font-size:9px;font-family:'DM Mono',monospace;}
-.wu{background:rgba(200,168,64,0.05);border:1px solid rgba(200,168,64,0.12);border-radius:6px;padding:8px 10px;margin-bottom:8px;}
-.wut{font-size:6px;letter-spacing:3px;color:var(--od);font-weight:700;text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:4px;}
-.wui{font-size:11px;color:var(--text);padding:1px 0;display:flex;align-items:center;gap:5px;}
-.wui::before{content:'›';color:var(--od);font-size:12px;flex-shrink:0;}
-.exc{background:var(--bg2);border:1px solid var(--border);border-radius:6px;margin-bottom:6px;overflow:hidden;}
-.ext{padding:8px 10px 6px;display:flex;justify-content:space-between;align-items:flex-start;gap:5px;border-bottom:1px solid var(--border);}
-.exl{flex:1;}
-.excat{font-size:6px;letter-spacing:3px;font-weight:700;text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:1px;}
-.exn{font-size:13px;font-weight:700;color:var(--text);line-height:1.2;}
-.exrx{background:rgba(200,168,64,0.08);border:1px solid rgba(200,168,64,0.2);border-radius:3px;padding:3px 6px;font-size:8px;font-weight:700;color:var(--od);font-family:'DM Mono',monospace;white-space:pre-line;flex-shrink:0;text-align:center;line-height:1.3;letter-spacing:0.5px;}
-.prb{font-size:7px;font-weight:700;padding:1px 4px;border-radius:2px;background:rgba(200,168,64,0.15);color:var(--od);margin-left:4px;display:none;font-family:'DM Mono',monospace;}
-.prb.show{display:inline;}
-.slog{padding:5px 10px 7px;}
-.chdr{display:grid;grid-template-columns:24px 1fr 1fr 56px 24px;gap:3px;margin-bottom:3px;}
-.chdr span{font-size:7px;letter-spacing:1px;color:var(--dim);text-align:center;text-transform:uppercase;font-weight:700;font-family:'DM Mono',monospace;}
-.setr{display:grid;grid-template-columns:24px 1fr 1fr 56px 24px;gap:3px;align-items:center;margin-bottom:3px;}
-.sn{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;text-align:center;background:var(--bg3);border-radius:3px;padding:5px 0;font-weight:700;}
-.si{background:var(--bg3);border:1px solid var(--border);border-radius:3px;color:var(--text);font-size:12px;padding:4px 2px;font-family:'DM Sans',sans-serif;width:100%;text-align:center;font-weight:600;}
-.si:focus{outline:none;border-color:var(--od);}
-.si::placeholder{color:var(--dim);font-size:9px;}
-.pc{font-size:9px;color:var(--od);text-align:center;font-family:'DM Mono',monospace;padding:5px 2px;background:var(--bg3);border-radius:3px;font-weight:600;}
-.pc.empty{color:var(--dim);}
-.sd{width:24px;height:24px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;margin:0 auto;}
-.sd.done{background:var(--green);border-color:var(--green2);color:#fff;}
-.sd.burn-done{background:var(--od2);border-color:var(--od);color:#fff;}
-.sd.burn-short{background:var(--red);border-color:var(--red2);color:#fff;}
-.adset{width:100%;padding:4px;background:transparent;border:1px dashed var(--border);border-radius:3px;color:var(--muted);font-size:8px;font-weight:700;letter-spacing:2px;cursor:pointer;font-family:'DM Mono',monospace;margin-top:1px;}
-.blbl{font-size:7px;letter-spacing:2px;color:var(--od);font-weight:700;text-transform:uppercase;font-family:'DM Mono',monospace;padding:2px 0 2px 1px;}
-.bstat{font-size:8px;font-weight:700;letter-spacing:1px;padding:1px 0 3px 1px;font-family:'DM Mono',monospace;}
-.vf{display:flex;justify-content:space-between;padding:4px 0 1px;font-size:8px;color:var(--dim);font-family:'DM Mono',monospace;border-top:1px solid var(--border);margin-top:2px;}
-.enw{padding:0 10px 8px;}
-.nt{font-size:10px;color:var(--muted);line-height:1.55;}
-.nt strong{color:var(--text);font-weight:600;}
-.atip{background:rgba(192,56,40,0.07);border:1px solid rgba(224,72,56,0.2);border-radius:3px;padding:5px 8px;margin-top:4px;font-size:9px;color:#e07868;line-height:1.4;}
-.atip .al{font-size:6px;letter-spacing:3px;font-weight:700;text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:1px;color:var(--red2);display:block;}
-.stip{background:rgba(48,104,176,0.07);border:1px solid rgba(72,136,208,0.2);border-radius:3px;padding:5px 8px;margin-top:4px;font-size:9px;color:#88b0d8;line-height:1.4;}
-.stip .sl{font-size:6px;letter-spacing:3px;font-weight:700;text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:1px;color:var(--blue2);display:block;}
-.cblk{background:rgba(40,120,64,0.06);border:1px solid rgba(56,168,88,0.18);border-radius:6px;padding:8px 10px;margin-top:6px;margin-bottom:5px;}
-.cbt{font-size:6px;letter-spacing:3px;color:var(--green2);font-weight:700;text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:1px;}
-.cbs{font-size:8px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:6px;}
-.cbr{display:flex;justify-content:space-between;align-items:flex-start;padding:5px 0;border-bottom:1px solid rgba(56,168,88,0.1);gap:6px;}
-.cbr:last-child{border-bottom:none;}
-.crn{font-size:12px;font-weight:600;color:var(--text);}
-.crd{font-size:9px;color:var(--muted);margin-top:1px;font-family:'DM Mono',monospace;line-height:1.4;}
-.cbd{background:rgba(40,120,64,0.12);border:1px solid rgba(56,168,88,0.2);border-radius:3px;padding:2px 6px;font-size:8px;color:var(--green2);font-family:'DM Mono',monospace;white-space:nowrap;flex-shrink:0;}
-.sblk{background:rgba(48,104,176,0.06);border:1px solid rgba(72,136,208,0.18);border-radius:6px;padding:8px 10px;margin-top:6px;margin-bottom:5px;}
-.sbt{font-size:6px;letter-spacing:3px;color:var(--blue2);font-weight:700;text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:1px;}
-.sbs{font-size:8px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:6px;}
-.sbr{display:flex;justify-content:space-between;align-items:flex-start;padding:5px 0;border-bottom:1px solid rgba(72,136,208,0.1);gap:6px;}
-.sbr:last-child{border-bottom:none;}
-.sbd{background:rgba(48,104,176,0.12);border:1px solid rgba(72,136,208,0.2);border-radius:3px;padding:2px 6px;font-size:8px;color:var(--blue2);font-family:'DM Mono',monospace;white-space:nowrap;flex-shrink:0;}
-.rest{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:20px 16px;text-align:center;margin-bottom:6px;}
-.rest .ri{font-size:32px;margin-bottom:6px;}
-.rest h3{font-family:'Barlow Condensed',sans-serif;font-size:20px;letter-spacing:2px;color:var(--od);margin-bottom:5px;}
-.rest p{font-size:11px;color:var(--muted);line-height:1.6;}
-.gbox{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:10px;margin-bottom:6px;}
-.gbox h3{font-family:'Barlow Condensed',sans-serif;font-size:15px;letter-spacing:1px;color:var(--od);margin-bottom:7px;}
-.gr{display:flex;gap:7px;margin-bottom:5px;font-size:11px;line-height:1.55;color:var(--text);align-items:flex-start;}
-.gr .gi{color:var(--od);font-weight:700;flex-shrink:0;min-width:44px;font-family:'DM Mono',monospace;font-size:9px;}
-.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:8px;}
-.fc{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:6px 8px;}
-.fc .fn{font-size:10px;font-weight:700;color:var(--text);}
-.fc .fd{font-size:8px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:1px;}
-.fc .fs{font-size:9px;color:var(--od);font-weight:700;font-family:'DM Mono',monospace;margin-top:2px;}
-.exp-bar{display:flex;gap:6px;padding:12px 14px;border-top:1px solid var(--border);margin-top:10px;}
-.exp-btn{flex:1;padding:10px;border-radius:6px;border:1px solid var(--border);background:var(--bg2);color:var(--muted);font-size:10px;font-weight:700;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:1px;text-align:center;}
-.exp-btn:active{border-color:var(--od);color:var(--od);}
+/* Layout: single-column field logbook, sticky day tabs, one card per lift. Deliberately dark, olive-gold military palette (single theme by choice). */
+:root{
+  color-scheme:dark;
+  --bg:#08090b;--bg2:#0e1013;--bg3:#14171b;--bd:#232830;
+  --tx:#e8eaf0;--mu:#8e94a3;--dim:#454c5c;
+  --od:#c9a943;--od3:#5e4a10;--odbg:#17130a;
+  --red:#b8402f;--red2:#e2644f;--blue2:#5b95d8;--green:#2c7a44;--green2:#44bb66;--teal:#22ae93;--ink:#04120e;
+  --f-disp:'Barlow Condensed','Arial Narrow',Impact,sans-serif;
+  --f-body:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-mono:'DM Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--tx);font-family:var(--f-body);font-size:14px;padding-inline:16px;padding-block:0 60px}
+.wrap{max-width:560px;margin:0 auto}
+.mono{font-family:var(--f-mono)}
+button{font-family:inherit}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--od);outline-offset:2px}
+.cover{padding-block:22px 14px;border-bottom:2px solid var(--od3)}
+.br{font-size:9px;letter-spacing:4px;color:var(--od);text-transform:uppercase}
+h1{font-family:var(--f-disp);font-size:46px;font-weight:900;line-height:.92;margin:6px 0;letter-spacing:.5px}
+h1 span{color:var(--od)}
+.sub{font-size:11px;color:var(--mu);line-height:1.6;margin:0 0 10px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.st{border:1px solid var(--od3);background:var(--odbg);border-radius:5px;padding:7px 3px;text-align:center}
+.st b{display:block;font-family:var(--f-disp);font-size:20px;color:var(--od);line-height:1;font-variant-numeric:tabular-nums}
+.st i{font-style:normal;font-size:8px;letter-spacing:1px;color:var(--mu);text-transform:uppercase}
+.sched{margin-top:9px;font-size:10px;color:var(--mu);line-height:1.6}
+.sched b{color:var(--tx);font-weight:500}
+.wkbar{display:flex;gap:4px;overflow-x:auto;padding-block:9px;border-bottom:1px solid var(--bd);scrollbar-width:none}
+.wkbar::-webkit-scrollbar{display:none}
+.wb{flex-shrink:0;min-width:48px;padding:5px 4px;border-radius:4px;border:1px solid var(--bd);background:var(--bg3);color:var(--mu);font-size:10px;font-weight:700;text-align:center;cursor:pointer;line-height:1.3;font-family:var(--f-mono)}
+.wb small{display:block;font-size:8px;font-weight:500;color:var(--dim)}
+.wb.on{border-color:var(--od);color:var(--od);background:var(--odbg)}
+.wb.dl{border-style:dashed}
+.wb.ev{border-color:var(--red)}
+.phase{padding-block:10px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.phase .pn{font-family:var(--f-disp);font-size:21px;font-weight:700;letter-spacing:1px}
+.phase .pd{font-size:10px;color:var(--mu);line-height:1.5;max-width:30ch;min-width:0}
+.prog{padding-block:7px 9px;border-bottom:1px solid var(--bd)}
+.pbar{height:4px;background:var(--bd);border-radius:2px;overflow:hidden}
+.pfill{height:100%;background:var(--od);transition:width .3s}
+.plbl{display:flex;justify-content:space-between;font-size:9px;color:var(--mu);letter-spacing:2px;margin-bottom:4px}
+.dbar{display:flex;overflow-x:auto;background:var(--bg);border-bottom:1px solid var(--bd);scrollbar-width:none;position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.dbar::-webkit-scrollbar{display:none}
+.db{flex:1;min-width:52px;padding:11px 6px;background:none;border:none;border-bottom:2px solid transparent;color:var(--dim);font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer;font-family:var(--f-mono)}
+.db.on{color:var(--od);border-bottom-color:var(--od)}
+.db.dn{color:var(--green2)}
+.page{padding-block:12px}
+.dh{border:1px solid var(--bd);background:var(--bg3);border-radius:8px;padding:11px 12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.dh>div{min-width:0}
+.dh .d1{font-size:9px;letter-spacing:3px;color:var(--mu);text-transform:uppercase}
+.dh .d2{font-family:var(--f-disp);font-size:24px;font-weight:900;line-height:1.05;color:var(--od);text-wrap:balance}
+.dh .d3{font-size:10px;color:var(--mu);margin-top:2px}
+.mb{padding:7px 11px;border-radius:14px;border:1px solid var(--bd);background:var(--bg);color:var(--mu);font-size:10px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:var(--f-mono)}
+.mb.dn{background:var(--green);border-color:var(--green2);color:var(--tx)}
+.sec{font-size:9px;letter-spacing:4px;color:var(--mu);text-transform:uppercase;font-weight:700;padding-block:12px 6px;display:flex;align-items:center;gap:6px;font-family:var(--f-mono)}
+.sec:after{content:'';flex:1;height:1px;background:var(--bd)}
+.box{border-radius:7px;padding:10px 12px;margin-bottom:8px;font-size:12px;line-height:1.55}
+.box .bt{font-size:9px;letter-spacing:3px;font-weight:700;text-transform:uppercase;margin-bottom:4px;font-family:var(--f-mono)}
+.box ul{list-style:none;margin:0;padding:0}
+.box li{padding:4px 0 4px 13px;position:relative;border-bottom:1px solid var(--bd)}
+.box li:last-child{border-bottom:none}
+.box li:before{content:'›';position:absolute;left:0}
+.wu{background:var(--bg2);border:1px solid var(--od3)}.wu .bt,.wu li:before{color:var(--od)}
+.am{background:var(--bg2);border:1px solid var(--green)}.am .bt,.am li:before{color:var(--green2)}
+.pm{background:var(--bg2);border:1px solid #2a4c75}.pm .bt,.pm li:before{color:var(--blue2)}
+.evb{background:var(--bg2);border:1px solid var(--red)}.evb .bt,.evb li:before{color:var(--red2)}
+.ex{background:var(--bg2);border:1px solid var(--bd);border-radius:7px;margin-bottom:8px;overflow:hidden}
+.et{display:flex;justify-content:space-between;gap:10px;padding:10px 11px 8px;border-bottom:1px solid var(--bd)}
+.et>div:first-child{min-width:0}
+.ec{font-size:8px;letter-spacing:2px;font-weight:700;color:var(--blue2);text-transform:uppercase;font-family:var(--f-mono)}
+.ss{display:inline-block;background:var(--teal);color:var(--ink);font-size:8px;padding:1px 4px;border-radius:2px;margin-right:5px;letter-spacing:1px}
+.en{font-size:15px;font-weight:700;line-height:1.2;margin-top:2px}
+.last{font-size:10px;color:var(--mu);margin-top:4px;font-family:var(--f-mono)}
+.last b{color:var(--od);font-weight:500}
+.up{font-size:10px;color:var(--green2);font-weight:700;margin-top:3px}
+.rx{flex-shrink:0;min-width:80px;text-align:center;background:var(--odbg);border:1px solid var(--od3);border-radius:4px;padding:5px 7px;font-size:11px;font-weight:700;color:var(--od);line-height:1.35;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.rx div{font-size:10px;font-weight:500}
+.rx .r2{color:var(--mu)}
+.rx .r3{color:var(--tx)}
+.log{padding:6px 11px}
+.hd,.row{display:grid;grid-template-columns:26px 1fr 1fr 64px 28px;gap:5px;align-items:center}
+.hd span{font-size:8px;letter-spacing:1px;color:var(--dim);text-align:center;font-weight:700;font-family:var(--f-mono)}
+.row{margin-top:5px}
+.sn{font-size:11px;color:var(--mu);text-align:center;background:var(--bg3);border-radius:3px;padding:8px 0;font-weight:700;font-family:var(--f-mono)}
+.in{width:100%;min-width:0;background:var(--bg3);border:1px solid var(--bd);border-radius:4px;color:var(--tx);font-size:15px;font-weight:600;text-align:center;padding:7px 2px;font-family:var(--f-body);font-variant-numeric:tabular-nums}
+.in::placeholder{color:var(--dim);font-size:11px;font-weight:500}
+.pv{font-size:10px;color:var(--od);text-align:center;background:var(--bg3);border-radius:4px;padding:8px 2px;font-weight:500;font-family:var(--f-mono);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pv.e{color:var(--dim)}
+.ck{width:28px;height:28px;border-radius:50%;border:1px solid var(--bd);background:none;color:var(--mu);font-size:12px;margin:0 auto;cursor:pointer;padding:0}
+.ck.ok{background:var(--green);border-color:var(--green2);color:var(--tx)}
+.add{width:100%;margin-top:6px;padding:6px;background:none;border:1px dashed var(--bd);border-radius:4px;color:var(--mu);font-size:9px;letter-spacing:2px;font-weight:700;cursor:pointer;font-family:var(--f-mono)}
+.ft{display:flex;justify-content:space-between;font-size:9px;color:var(--dim);padding-top:6px;border-top:1px solid var(--bd);margin-top:6px;font-family:var(--f-mono)}
+.nt{padding:0 11px 10px;font-size:11px;color:var(--mu);line-height:1.55}
+.nt b{color:var(--tx);font-weight:600}
+.rules{background:var(--bg2);border:1px solid var(--bd);border-radius:7px;padding:11px 12px;margin-bottom:8px}
+.rules h3{font-family:var(--f-disp);font-size:19px;color:var(--od);letter-spacing:1px;margin:0 0 6px}
+.rr{display:flex;gap:10px;font-size:12px;line-height:1.55;padding-block:5px;border-bottom:1px solid var(--bd)}
+.rr:last-child{border-bottom:none}
+.rr b{color:var(--od);min-width:66px;font-size:9px;letter-spacing:1px;padding-top:3px;font-family:var(--f-mono);flex-shrink:0}
+.rr span{min-width:0}
+.backup{border-top:1px solid var(--bd);margin-top:14px;padding-block:14px}
+.backup h3{font-family:var(--f-disp);font-size:19px;color:var(--od);letter-spacing:1px;margin:0 0 4px}
+.backup p{font-size:11px;color:var(--mu);line-height:1.5;margin:0 0 10px}
+.xrow{display:flex;gap:6px;flex-wrap:wrap}
+.xb{flex:1 1 140px;padding:11px;border-radius:6px;border:1px solid var(--bd);background:var(--bg2);color:var(--tx);font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer;font-family:var(--f-mono)}
+.xb.warn{border-color:var(--red);color:var(--red2)}
+textarea{width:100%;min-height:110px;margin-top:8px;background:var(--bg3);color:var(--tx);border:1px solid var(--bd);border-radius:6px;padding:8px;font-family:var(--f-mono);font-size:10px}
+.msg{font-size:11px;color:var(--green2);margin-top:6px;min-height:1em;font-family:var(--f-mono)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
+
+<div class="wrap">
 <div class="cover">
-  <div class="branch">US Army · AFT + HtWtR · Galpin × Garner Protocol</div>
-  <h1><span class="l1">IRON &amp;</span><br><span class="l2">FAST</span></h1>
-  <p class="sub">2x frequency · Hypertrophy clusters · 6 weeks<br>HtWtR Aug 31 · AFT Sep 14–18 · 14.1% BF → cut 0.5%/wk<br>TRT .7ml · No axial load · Left shoulder aware</p>
-  <div class="glbl">Current</div>
-  <div class="srow">
-    <div class="sc"><div class="sv">15–17</div><div class="sk">2-Mi</div></div>
-    <div class="sc"><div class="sv">315</div><div class="sk">Hex DL</div></div>
-    <div class="sc"><div class="sv">.48</div><div class="sk">HtWtR</div></div>
-    <div class="sc"><div class="sv">14.1%</div><div class="sk">BF</div></div>
+  <div class="br mono">Hybrid hypertrophy · Galpin model · 20 weeks</div>
+  <h1>IRON <span>HYBRID</span></h1>
+  <p class="sub mono">Arms · chest · back · legs · 2-mile · Norwegian · AFT<br>Oct 5 → Feb 21 · Deloads wks 6 / 11 / 16 · RPE 8 cap on compounds</p>
+  <div class="grid4">
+    <div class="st"><b>13:30</b><i>2-mi goal</i></div>
+    <div class="st"><b>350</b><i>Hex 3RM</i></div>
+    <div class="st"><b>4:35</b><i>NFM cutoff</i></div>
+    <div class="st"><b>FEB</b><i>AFT</i></div>
   </div>
-  <div class="glbl">Targets</div>
-  <div class="srow">
-    <div class="tc"><div class="sv">14:00</div><div class="sk">2-Mi</div></div>
-    <div class="tc"><div class="sv">350</div><div class="sk">DL</div></div>
-    <div class="tc"><div class="sv">&lt;.45</div><div class="sk">HtWtR</div></div>
-    <div class="tc"><div class="sv">11.1%</div><div class="sk">BF wk6</div></div>
+  <div class="sched mono"><b>0545–0645</b> lift · <b>0645–0715</b> run · <b>0723</b> drive home · PM work 15–20 min</div>
+</div>
+
+<div class="wkbar" id="wkbar"></div>
+<div class="phase" id="phase"></div>
+<div class="prog"><div class="plbl mono"><span>WEEK PROGRESS</span><span id="pc">0/6</span></div><div class="pbar"><div class="pfill" id="pf"></div></div></div>
+<div class="dbar" id="dbar"></div>
+<div class="page" id="page"></div>
+
+<div class="backup">
+  <h3>Backup</h3>
+  <p>Your log lives in this browser. Copy a backup every week or two and paste it into a note or text to yourself. Restore by pasting it back here or choosing a saved .json file.</p>
+  <div class="xrow">
+    <button class="xb" id="btn-copy" onclick="copyBackup()">COPY BACKUP</button>
+    <button class="xb" id="btn-file" onclick="document.getElementById('imp').click()">RESTORE FROM FILE</button>
   </div>
-  <div class="glbl">Daily Macros</div>
-  <div class="macro-row">
-    <div class="mc"><div class="sv">235g</div><div class="sk">Protein</div></div>
-    <div class="mc"><div class="sv">365g</div><div class="sk">Carbs</div></div>
-    <div class="mc"><div class="sv">75g</div><div class="sk">Fat</div></div>
-  </div>
+  <input type="file" id="imp" accept=".json,application/json,text/plain" hidden onchange="importFile(event)">
+  <textarea id="bk-text" placeholder="Backup text shows here after you copy it. To restore, paste a backup here and tap Restore."></textarea>
+  <div class="xrow" style="margin-top:6px"><button class="xb warn" id="btn-restore" onclick="restoreText()">RESTORE PASTED BACKUP</button></div>
+  <div class="msg" id="bk-msg"></div>
 </div>
-<div class="tl">
-  <div class="tl-c tl-b"><span class="tw">WK 1–3</span>BUILD</div>
-  <div class="tl-c tl-p"><span class="tw">WK 4</span>PEAK</div>
-  <div class="tl-c tl-s"><span class="tw">WK 5</span>SHARP</div>
-  <div class="tl-c tl-t"><span class="tw">WK 6</span>TAPER</div>
-</div>
-<div class="wsel"><div class="wsg" id="wg"></div></div>
-<div class="wprog"><div class="wpr"><span class="wpl">Progress</span><span class="wpc" id="wpc">0/6</span></div><div class="wpb"><div class="wpf" id="wpf" style="width:0%"></div></div><div class="wpd" id="wpd"></div></div>
-<div class="dbar">
-  <button class="dbt active" onclick="showDay('mon',this)" id="dtb-mon">MON</button>
-  <button class="dbt" onclick="showDay('tue',this)" id="dtb-tue">TUE</button>
-  <button class="dbt" onclick="showDay('wed',this)" id="dtb-wed">WED</button>
-  <button class="dbt" onclick="showDay('thu',this)" id="dtb-thu">THU</button>
-  <button class="dbt" onclick="showDay('fri',this)" id="dtb-fri">FRI</button>
-  <button class="dbt" onclick="showDay('sat',this)" id="dtb-sat">SAT</button>
-  <button class="dbt" onclick="showDay('sun',this)" id="dtb-sun">SUN</button>
-</div>
-
-<!-- ═══ MON ═══ -->
-<div class="page active" id="day-mon">
-  <div class="dhdr"><div class="dhl"><div class="dhd">Monday</div><div class="dhn" style="color:var(--od);">SHOULDER · CHEST A · CORE</div><div class="dhm">OHP + low incline + obliques + clusters · 60 min</div></div><button class="mbtn" id="mb-mon" onclick="markDay('mon')">MARK DONE</button></div>
-  <div class="wu"><div class="wut">⚡ Warmup</div><div class="wui">Face pull light 2×15</div><div class="wui">Lateral raise light 1×20</div><div class="wui">Arm circles 20 fwd / 20 back</div></div>
-  <div class="sec" style="color:var(--od);">Shoulders</div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--od);">SHOULDER · PRESS</div><div class="exn">Seated DB OHP <span class="prb" id="pr-mon-ohp">🏆</span></div></div></div><div class="slog" id="sl-mon-ohp"></div><div class="enw"><div class="nt">DBs at ear height, full extension. Seated removes lower back.</div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--od);">SHOULDER · LATERAL</div><div class="exn">Cable Lateral Raise <span class="prb" id="pr-mon-clr">🏆</span></div></div></div><div class="slog" id="sl-mon-clr"></div><div class="enw"><div class="nt">Low cable, one arm. Constant tension. Shoulder height only.</div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--od);">SHOULDER · HEALTH</div><div class="exn">Face Pull <span class="prb" id="pr-mon-cfp">🏆</span></div></div></div><div class="slog" id="sl-mon-cfp"></div><div class="enw"><div class="nt">Rope at face, elbows wide, external rotation at end. 15–20 every set.</div></div></div>
-  <div class="sec" style="color:var(--blue2);">Chest A — Low Incline (Upper Pec Fix)</div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--blue2);">CHEST · LOW INCLINE</div><div class="exn">Incline DB Press — 15–20° <span class="prb" id="pr-mon-idp">🏆</span></div></div></div><div class="slog" id="sl-mon-idp"></div><div class="enw"><div class="nt"><strong>15–20° incline ONLY — not 30–45°.</strong> Lower angle shifts load from front delt to upper pec. Wide grip, elbows at 75° from torso. Think chest-up, not shoulder-forward. If front delts are burning before chest, angle is too steep.</div><div class="stip"><span class="sl">Galpin × Garner — Lagging Muscles</span>Garner's hypertrophy cluster approach: if a muscle lags, hit it with 2–3 isolation sets at the END of multiple sessions rather than one big day. That's why you have chest clusters on Wed too.</div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--blue2);">CHEST · CABLE</div><div class="exn">Cable Fly Low-to-High <span class="prb" id="pr-mon-cfl">🏆</span></div></div></div><div class="slog" id="sl-mon-cfl"></div><div class="enw"><div class="nt">Cables low, arc upward. Upper pec and inner chest isolation. Squeeze at top 1 sec. This is the primary upper pec shaper.</div></div></div>
-  <div class="sec" style="color:var(--red2);">Core — Oblique Rotation</div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--red2);">OBLIQUE</div><div class="exn">Cable Woodchop High-to-Low <span class="prb" id="pr-mon-wch">🏆</span></div></div></div><div class="slog" id="sl-mon-wch"></div><div class="enw"><div class="nt">Thoracic rotation only. 12 each side. Tightens waist.</div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--red2);">ANTI-ROT</div><div class="exn">Suitcase DB Hold Walk <span class="prb" id="pr-mon-pal">🏆</span></div></div></div><div class="slog" id="sl-mon-pal"></div><div class="enw"><div class="nt">Heavy DB in one hand, walk 40 yards, switch hands. Stay perfectly upright — <strong>don't lean.</strong> Your obliques fire hard to resist the lateral pull. Same anti-rotation training as Pallof, no cable setup needed.</div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--red2);">CORE</div><div class="exn">Cable Twisting Crunch <span class="prb" id="pr-mon-ctc">🏆</span></div></div></div><div class="slog" id="sl-mon-ctc"></div><div class="enw"><div class="nt">Kneel, rope at head, crunch + rotate. 15 each side.</div></div></div>
-  <div class="sec" style="color:var(--teal);">Clusters — Traps + Triceps</div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--teal);">TRAP · CLUSTER</div><div class="exn">DB Shrug — Forward Lean <span class="prb" id="pr-mon-shr">🏆</span></div></div></div><div class="slog" id="sl-mon-shr"></div><div class="enw"><div class="nt">Slight forward lean hits mid-traps not just upper. Hold top 2 sec. <strong>Left shoulder safe — no overhead or rotation.</strong></div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--teal);">TRI · CLUSTER</div><div class="exn">Rope Pushdown <span class="prb" id="pr-mon-rpd">🏆</span></div></div></div><div class="slog" id="sl-mon-rpd"></div><div class="enw"><div class="nt">Quick 2 sets after everything else. Elbows pinned, full lockout.</div></div></div>
-  <div class="cblk"><div class="cbt">🏃 Cardio</div><div class="cbs">Monday — Zone 2 · Start week easy</div><div class="cbr"><div><div class="crn">Incline walk or easy jog</div><div class="crd">3.5mph 8–10% grade or 7:30–8:00/mi · 20–30 min. Conversational. Fat-burning Z2.</div></div><div class="cbd">Z2</div></div></div>
-</div>
-
-<!-- ═══ TUE ═══ -->
-<div class="page" id="day-tue">
-  <div class="dhdr"><div class="dhl"><div class="dhd">Tuesday</div><div class="dhn" style="color:var(--od);">LOWER A · DL VOLUME</div><div class="dhm">Quad · Ham · Glute · Hex bar · Calves · 60 min</div></div><button class="mbtn" id="mb-tue" onclick="markDay('tue')">MARK DONE</button></div>
-  <div class="rx"><div class="rxt">Deadlift Rx</div><div class="rxr"><span class="rxk">Wks 1–3</span><span class="rxv">4×6 @ 70% (~220)</span></div><div class="rxr"><span class="rxk">Wk 4</span><span class="rxv">4×4 @ 80% (~250)</span></div><div class="rxr"><span class="rxk">Wks 5–6</span><span class="rxv">3×3 @ 75% maintain</span></div></div>
-  <div class="wu"><div class="wut">⚡ Warmup</div><div class="wui">5 min bike easy</div><div class="wui">Leg press light 1×15</div><div class="wui">Hex bar only 2×10 hip hinge</div></div>
-  <div class="sec" style="color:var(--od);">Hex Bar Deadlift</div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--od);">DL · AFT</div><div class="exn">Hex Bar DL Volume <span class="prb" id="pr-tue-dl">🏆</span></div></div></div><div class="slog" id="sl-tue-dl"></div><div class="enw"><div class="nt"><strong>70%=~220 · 80%=~250.</strong> Full reset. Stand tall at lockout.</div></div></div>
-  <div class="sec" style="color:var(--od);">Knee-Safe Legs</div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--blue2);">QUAD</div><div class="exn">Leg Press <span class="prb" id="pr-tue-lp">🏆</span></div></div></div><div class="slog" id="sl-tue-lp"></div><div class="enw"><div class="nt">Shallow ROM. Go heavy.</div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--blue2);">QUAD</div><div class="exn">Leg Extension <span class="prb" id="pr-tue-le">🏆</span></div></div></div><div class="slog" id="sl-tue-le"></div><div class="enw"><div class="nt">2-sec squeeze at peak.</div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--blue2);">HAM</div><div class="exn">Seated Leg Curl <span class="prb" id="pr-tue-lc">🏆</span></div></div></div><div class="slog" id="sl-tue-lc"></div><div class="enw"><div class="nt">3-sec slow negative. Drives DL pull.</div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--blue2);">GLUTE</div><div class="exn">Hip Thrust <span class="prb" id="pr-tue-ht">🏆</span></div></div></div><div class="slog" id="sl-tue-ht"></div><div class="enw"><div class="nt">Squeeze 1 sec at top. Glutes = run + DL + carry.</div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--blue2);">CALVES</div><div class="exn">Standing Calf Raise <span class="prb" id="pr-tue-cr">🏆</span></div></div></div><div class="slog" id="sl-tue-cr"></div><div class="enw"><div class="nt">Toes out/in alternate. Hold 1 sec at top.</div></div></div>
-  <div class="sec" style="color:var(--teal);">Cluster — Biceps</div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--teal);">BI · CLUSTER</div><div class="exn">DB Hammer Curl <span class="prb" id="pr-tue-hc">🏆</span></div></div></div><div class="slog" id="sl-tue-hc"></div><div class="enw"><div class="nt">Neutral grip. Brachialis + brachioradialis = arm thickness. 2 quick sets after legs.</div></div></div>
-  <div class="cblk"><div class="cbt">🏃 Cardio</div><div class="cbs">Tuesday — Tempo Run</div><div class="cbr"><div><div class="crn">Wks 1–3: Tempo 2–3 mi</div><div class="crd">7:00–7:15/mi · Short phrases only. Teaches lactate clearance. Walk cooldown.</div></div><div class="cbd">TEMPO</div></div><div class="cbr"><div><div class="crn">Wks 4–6: Easy 20 min</div><div class="crd">Taper. 7:30–8:00/mi or walk.</div></div><div class="cbd">EASY</div></div></div>
-</div>
-
-<!-- ═══ WED ═══ -->
-<div class="page" id="day-wed">
-  <div class="dhdr"><div class="dhl"><div class="dhd">Wednesday</div><div class="dhn" style="color:var(--od);">BACK · BICEPS · CORE</div><div class="dhm">Mid-back focus + arm growth + chest cluster · 60 min</div></div><button class="mbtn" id="mb-wed" onclick="markDay('wed')">MARK DONE</button></div>
-  <div class="wu"><div class="wut">⚡ Warmup</div><div class="wui">Straight-arm pulldown light 1×15</div><div class="wui">Band pull-apart 2×15</div><div class="wui">Dead hang 2×15 sec</div></div>
-  <div class="sec" style="color:var(--od);">Back — Mid-Back Width Focus</div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--od);">BACK · WIDTH</div><div class="exn">Lat Pulldown Wide <span class="prb" id="pr-wed-lpd">🏆</span></div></div></div><div class="slog" id="sl-wed-lpd"></div><div class="enw"><div class="nt">Pull to upper chest. Full extension at top. Width comes from the stretch.</div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--od);">BACK · MID-BACK</div><div class="exn">Chest-Supported Row <span class="prb" id="pr-wed-csr">🏆</span></div></div></div><div class="slog" id="sl-wed-csr"></div><div class="enw"><div class="nt"><strong>This is the mid-back builder.</strong> Chest on pad eliminates lower back entirely. Squeeze shoulder blades for 1 sec. Pull to lower chest for rhomboids and mid-traps. Your lower back is dominant because it compensates — this machine removes that completely.</div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--od);">BACK · CABLE ROW</div><div class="exn">Seated Cable Row Wide <span class="prb" id="pr-wed-scr">🏆</span></div></div></div><div class="slog" id="sl-wed-scr"></div><div class="enw"><div class="nt">Wide bar attachment. Pull to lower chest. Sit tall — <strong>if your torso swings, weight is too heavy.</strong> Upper back does the work.</div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--od);">BACK · ISO</div><div class="exn">Straight-Arm Pulldown <span class="prb" id="pr-wed-sap">🏆</span></div></div></div><div class="slog" id="sl-wed-sap"></div><div class="enw"><div class="nt">Arms straight. Pure lat. Arc overhead to hips.</div></div></div>
-  <div class="sec" style="color:var(--blue2);">Biceps — Growth Focus</div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--blue2);">BI · COMPOUND</div><div class="exn">EZ Bar Curl <span class="prb" id="pr-wed-ezc">🏆</span></div></div></div><div class="slog" id="sl-wed-ezc"></div><div class="enw"><div class="nt">Elbows at sides. No swinging. Full range.</div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--blue2);">BI · LONG HEAD</div><div class="exn">Incline DB Curl <span class="prb" id="pr-wed-idc">🏆</span></div></div></div><div class="slog" id="sl-wed-idc"></div><div class="enw"><div class="nt">Bench at 45–60°, arms hang. The stretch at bottom builds the long head peak.</div></div></div>
-  <div class="sec" style="color:var(--red2);">Core — Wed Session</div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--red2);">OBLIQUE</div><div class="exn">Cable Woodchop Low-to-High <span class="prb" id="pr-wed-wlo">🏆</span></div></div></div><div class="slog" id="sl-wed-wlo"></div><div class="enw"><div class="nt">Opposite of Monday's high-to-low. Different oblique angle.</div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--red2);">CORE</div><div class="exn">Hanging Knee Raise <span class="prb" id="pr-wed-hkr">🏆</span></div></div></div><div class="slog" id="sl-wed-hkr"></div><div class="enw"><div class="nt">Dead hang, knees to chest, add twist L/R. If no bar, cable crunch.</div></div></div>
-  <div class="sec" style="color:var(--teal);">Cluster — Upper Chest + Traps</div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--teal);">CHEST · CLUSTER</div><div class="exn">Cable Fly Low-to-High <span class="prb" id="pr-wed-cfl">🏆</span></div></div></div><div class="slog" id="sl-wed-cfl"></div><div class="enw"><div class="nt">2 sets. Same upper pec isolation as Mon — frequency is the growth driver for lagging muscles.</div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--teal);">TRAP · CLUSTER</div><div class="exn">Cable Shrug <span class="prb" id="pr-wed-csh">🏆</span></div></div></div><div class="slog" id="sl-wed-csh"></div><div class="enw"><div class="nt">Cable in front, shrug straight up. 2 sets. Different stimulus than DB shrug Mon.</div></div></div>
-  <div class="cblk"><div class="cbt">🏃 Cardio</div><div class="cbs">Wednesday — 800m VO2 Max Intervals</div><div class="cbr"><div><div class="crn">Wks 1–2: 5×800m @ 5K effort</div><div class="crd">3:20–3:30 per 800 · 2 min walk between. 90–95% max HR. Barely able to talk. This is the #1 2-mile time dropper.</div></div><div class="cbd">VO2</div></div><div class="cbr"><div><div class="crn">Wks 3–4: 6×800m</div><div class="crd">Same pace, one more rep. 3:15–3:25 as you improve. Add volume not speed.</div></div><div class="cbd">VO2+</div></div><div class="cbr"><div><div class="crn">Wks 5–6: 4×400m race pace</div><div class="crd">1:40–1:45 per 400 · 3 min rest. Sharpen. Wk6: 2×400m only.</div></div><div class="cbd">SHARP</div></div></div>
-</div>
-
-<!-- ═══ THU ═══ -->
-<div class="page" id="day-thu">
-  <div class="dhdr"><div class="dhl"><div class="dhd">Thursday</div><div class="dhn" style="color:var(--od);">CHEST B · TRI · SHOULDER B</div><div class="dhm">Press + tri mass + rear delt · 60 min</div></div><button class="mbtn" id="mb-thu" onclick="markDay('thu')">MARK DONE</button></div>
-  <div class="wu"><div class="wut">⚡ Warmup</div><div class="wui">Band pull-apart 2×20</div><div class="wui">Light press machine 1×15</div><div class="wui">Rope pushdown light 1×20</div></div>
-  <div class="sec" style="color:var(--od);">Chest B — Press Day</div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--od);">CHEST · PRESS</div><div class="exn">Chest Press Machine <span class="prb" id="pr-thu-cpm">🏆</span></div></div></div><div class="slog" id="sl-thu-cpm"></div><div class="enw"><div class="nt">Go heavy. Machine removes stabilizer fatigue so more load goes to the chest.</div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--od);">CHEST · LOW INCLINE</div><div class="exn">Incline DB Press — 15–20° <span class="prb" id="pr-thu-idp">🏆</span></div></div></div><div class="slog" id="sl-thu-idp"></div><div class="enw"><div class="nt">Second incline this week. Mon was after OHP (pre-fatigued), today fresh — <strong>go heavier.</strong> Same 15–20° low angle.</div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--od);">CHEST · FLY</div><div class="exn">Cable Fly High-to-Low <span class="prb" id="pr-thu-cfl">🏆</span></div></div></div><div class="slog" id="sl-thu-cfl"></div><div class="enw"><div class="nt">Cables high, arc down. Lower/mid pec shaping. Different angle from Mon's low-to-high.</div></div></div>
-  <div class="sec" style="color:var(--blue2);">Triceps — Mass</div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--blue2);">TRI · ROPE</div><div class="exn">Rope Pushdown <span class="prb" id="pr-thu-rpd">🏆</span></div></div></div><div class="slog" id="sl-thu-rpd"></div><div class="enw"><div class="nt">Elbows pinned. Push down and out. Full lockout.</div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--blue2);">TRI · LONG HEAD</div><div class="exn">OH Cable Extension <span class="prb" id="pr-thu-oht">🏆</span></div></div></div><div class="slog" id="sl-thu-oht"></div><div class="enw"><div class="nt">Rope, face away, elbows by ears. Long head stretch = most arm size.</div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--blue2);">TRI · FINISHER</div><div class="exn">Dip Machine or DB Kickback <span class="prb" id="pr-thu-tkb">🏆</span></div></div></div><div class="slog" id="sl-thu-tkb"></div><div class="enw"><div class="nt">Finisher. Lock elbow, extend fully, squeeze at top.</div><div class="stip"><span class="sl">Galpin — One Bad Rep Rule</span>Garner says stop the set when you can't complete a rep with full ROM and controlled tempo. One bad rep means the set is over. Don't grind out ugly reps — they don't build muscle, they build injuries.</div></div></div>
-  <div class="sec" style="color:var(--red2);">Shoulder B + Clusters</div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--red2);">REAR DELT</div><div class="exn">Cable Rear Delt Fly <span class="prb" id="pr-thu-rdf">🏆</span></div></div></div><div class="slog" id="sl-thu-rdf"></div><div class="enw"><div class="nt">Cables at face, cross, pull out and back. Rear delts are the most undertrained shoulder head.</div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--red2);">LATERAL</div><div class="exn">DB Lateral Raise <span class="prb" id="pr-thu-dlr">🏆</span></div></div></div><div class="slog" id="sl-thu-dlr"></div><div class="enw"><div class="nt">Slight lean fwd. Lead with elbow. Mon was cable, today DB — different curve.</div></div></div>
-  <div class="sec" style="color:var(--teal);">Clusters — Traps + Biceps</div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--teal);">TRAP · CLUSTER</div><div class="exn">DB Shrug <span class="prb" id="pr-thu-shr">🏆</span></div></div></div><div class="slog" id="sl-thu-shr"></div><div class="enw"><div class="nt">Heavy, hold top 2 sec. 3rd trap session this week (Mon, Wed, Thu).</div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--teal);">BI · CLUSTER</div><div class="exn">Cable Curl <span class="prb" id="pr-thu-bic">🏆</span></div></div></div><div class="slog" id="sl-thu-bic"></div><div class="enw"><div class="nt">Low cable, constant tension. 2 quick sets for frequency.</div></div></div>
-  <div class="cblk"><div class="cbt">🏃 Cardio</div><div class="cbs">Thursday — Zone 2 Recovery · After VO2 yesterday</div><div class="cbr"><div><div class="crn">Bike or elliptical</div><div class="crd">Easy Z2 · HR under 140 · 20–30 min. Bike better than running — zero impact after sprints.</div></div><div class="cbd">Z2</div></div></div>
-</div>
-
-<!-- ═══ FRI ═══ -->
-<div class="page" id="day-fri">
-  <div class="dhdr"><div class="dhl"><div class="dhd">Friday</div><div class="dhn" style="color:var(--red2);">LOWER POWER · DL PEAK</div><div class="dhm">Heavy hex bar · Sandbag · Ham 2x · Core · 60 min</div></div><button class="mbtn" id="mb-fri" onclick="markDay('fri')">MARK DONE</button></div>
-  <div class="rx"><div class="rxt">Deadlift Rx — Heavy</div><div class="rxr"><span class="rxk">Wks 1–2</span><span class="rxv">3×3 @ 80–85% (~255–265)</span></div><div class="rxr"><span class="rxk">Wk 3</span><span class="rxv">2×2 @ 88% (~275)</span></div><div class="rxr"><span class="rxk">Wk 4</span><span class="rxv">1×1 @ 93% (~295) → test 350</span></div><div class="rxr"><span class="rxk">Wks 5–6</span><span class="rxv">2×3 @ 75% (~235) maintain</span></div></div>
-  <div class="wu"><div class="wut">⚡ Warmup 8 Min</div><div class="wui">5 min bike</div><div class="wui">Hex bar only 2×8</div><div class="wui">40% 1×5 · 60% 1×3 · 75% 1×2</div></div>
-  <div class="sec" style="color:var(--red2);">Hex Bar DL — Peak</div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--red2);">DL · PEAK</div><div class="exn">Hex Bar DL Heavy <span class="prb" id="pr-fri-dlp">🏆</span></div></div></div><div class="slog" id="sl-fri-dlp"></div><div class="enw"><div class="nt"><strong>Never miss a rep.</strong> If it doesn't move, drop 10lbs.</div><div class="atip"><span class="al">⚑ AFT</span>Target 350 max. Training heavy singles makes 3 reps feel submaximal on test day.</div></div></div>
-  <div class="sec" style="color:var(--red2);">Power + Ham 2x</div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--red2);">POWER</div><div class="exn">Box Jump <span class="prb" id="pr-fri-bj">🏆</span></div></div></div><div class="slog" id="sl-fri-bj"></div><div class="enw"><div class="nt">Max intent. Full reset. Step down.</div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--red2);">HAM 2x</div><div class="exn">Lying Leg Curl <span class="prb" id="pr-fri-llc">🏆</span></div></div></div><div class="slog" id="sl-fri-llc"></div><div class="enw"><div class="nt">Prone position — different from Tue seated. Two curl variations = full ham development.</div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--red2);">POSTERIOR</div><div class="exn">DB RDL <span class="prb" id="pr-fri-rdl">🏆</span></div></div></div><div class="slog" id="sl-fri-rdl"></div><div class="enw"><div class="nt">Heaviest DBs. Hip hinge, hamstring stretch.</div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--red2);">CALVES 2x</div><div class="exn">Leg Press Calf Raise <span class="prb" id="pr-fri-lpc">🏆</span></div></div></div><div class="slog" id="sl-fri-lpc"></div><div class="enw"><div class="nt">Toes at bottom of platform. More load than standing — different stimulus from Tue.</div></div></div>
-  <div class="sec" style="color:var(--red2);">Core — Fri Session</div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--red2);">ROTATION</div><div class="exn">Cable Twist or Landmine <span class="prb" id="pr-fri-lrc">🏆</span></div></div></div><div class="slog" id="sl-fri-lrc"></div><div class="enw"><div class="nt">Cable at chest, rotate away. Different plane than Mon/Wed. 15 each side.</div></div></div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--red2);">BRACE</div><div class="exn">Dead Bug <span class="prb" id="pr-fri-db">🏆</span></div></div></div><div class="slog" id="sl-fri-db"></div><div class="enw"><div class="nt">Back flat, opposite arm/leg extend. 20 alternating. Trains carry brace pattern.</div></div></div>
-  <div class="sec" style="color:var(--teal);">Cluster — Back Row</div>
-  <div class="exc"><div class="ext"><div class="exl"><div class="excat" style="color:var(--teal);">BACK · CLUSTER</div><div class="exn">Chest-Supported Row <span class="prb" id="pr-fri-csr">🏆</span></div></div></div><div class="slog" id="sl-fri-csr"></div><div class="enw"><div class="nt">2 sets. Mid-back frequency. Squeeze hard.</div></div></div>
-  <div class="sblk"><div class="sbt">🎒 Sandbag Carry — Track/Turf</div><div class="sbs">85–95lb sandbag</div><div class="sbr"><div><div class="crn">Wks 1–2: 6×50yd @ 85lbs</div><div class="crd">60 sec rest · Bear hug · Under 18 sec target</div></div><div class="sbd">6×50</div></div><div class="sbr"><div><div class="crn">Wks 3–4: 8×50yd @ 95lbs</div><div class="crd">45 sec rest · Peak volume + load</div></div><div class="sbd">8×50</div></div><div class="sbr"><div><div class="crn">Wks 5–6: 4×50yd @ 85lbs</div><div class="crd">Maintain. Wk6: 2 carries race effort only.</div></div><div class="sbd">4×50</div></div></div>
-  <div class="cblk"><div class="cbt">🏃 Cardio</div><div class="cbs">Friday — Fartlek or Zone 2</div><div class="cbr"><div><div class="crn">Wks 1–3: Fartlek 20–30 min</div><div class="crd">Jog 3 min → surge 1 min → repeat. Speed under fatigue after DL + carries.</div></div><div class="cbd">FARTLEK</div></div><div class="cbr"><div><div class="crn">Wks 4–6: Easy 20 min Z2</div><div class="crd">Taper. Don't compound fatigue.</div></div><div class="cbd">Z2</div></div></div>
-</div>
-
-<!-- ═══ SAT ═══ -->
-<div class="page" id="day-sat">
-  <div class="dhdr"><div class="dhl"><div class="dhd">Saturday</div><div class="dhn" style="color:var(--green2);">HIKE</div><div class="dhm">45–60 min · Active recovery</div></div><button class="mbtn" id="mb-sat" onclick="markDay('sat')">MARK DONE</button></div>
-  <div class="cblk"><div class="cbt">🥾 Morning Hike</div><div class="cbs">Zone 2 · Find hills</div><div class="cbr"><div><div class="crn">Hike 45–60 min</div><div class="crd">Moderate terrain. Aerobic base + ankle stability without joint stress. Optional 20lb ruck. The hike IS the workout.</div></div><div class="cbd">HIKE</div></div></div>
-</div>
-
-<!-- ═══ SUN ═══ -->
-<div class="page" id="day-sun">
-  <div class="rest"><div class="ri">🪖</div><h3>SUNDAY — FULL REST</h3><p><strong>Non-negotiable.</strong> 8–9 hours sleep. No extra cardio.</p></div>
-  <div class="gbox"><h3>2x FREQUENCY MAP</h3>
-    <div class="fgrid">
-      <div class="fc"><div class="fn">Chest</div><div class="fd">Mon low incline+fly · Thu press+incline+fly · Wed cluster</div><div class="fs">3x — ~17 sets/wk</div></div>
-      <div class="fc"><div class="fn">Back</div><div class="fd">Wed pulldown+CSR+row+SAP · Fri cluster row</div><div class="fs">2x — ~14 sets/wk</div></div>
-      <div class="fc"><div class="fn">Shoulders</div><div class="fd">Mon OHP+lat+face · Thu rear delt+lat</div><div class="fs">2x — ~14 sets/wk</div></div>
-      <div class="fc"><div class="fn">Traps</div><div class="fd">Mon DB shrug · Wed cable shrug · Thu DB shrug</div><div class="fs">3x — ~6 sets/wk</div></div>
-      <div class="fc"><div class="fn">Quads</div><div class="fd">Tue press+ext · Fri hex bar</div><div class="fs">2x — ~8+ sets/wk</div></div>
-      <div class="fc"><div class="fn">Hamstrings</div><div class="fd">Tue seated curl+DL · Fri lying curl+RDL+DL</div><div class="fs">2x — ~14 sets/wk</div></div>
-      <div class="fc"><div class="fn">Biceps</div><div class="fd">Tue hammer cluster · Wed EZ+incline · Thu cable cluster</div><div class="fs">3x — ~10 sets/wk</div></div>
-      <div class="fc"><div class="fn">Triceps</div><div class="fd">Mon rope cluster · Thu push+OH+kick</div><div class="fs">2x — ~10 sets/wk</div></div>
-    </div>
-  </div>
-  <div class="gbox"><h3>NUTRITION — 235P / 365C / 75F</h3>
-    <div class="gr"><span class="gi">MACROS</span>3,095 cal/day. At 0.5% BF cut/week you need ~350 cal deficit on rest days. Training days eat at maintenance or slight surplus to fuel sessions. <strong>Carb cycle:</strong> higher carbs Tue/Wed/Fri (hard days), lower Mon/Thu/Sat.</div>
-    <div class="gr"><span class="gi">PRE-GYM</span>Banana + uncrustable = ~45g carbs, ~8g protein. Enough for the session. <strong>Post-workout within 30 min: 40g protein shake minimum.</strong> This is non-negotiable on TRT — the anabolic window is real when androgens are elevated.</div>
-    <div class="gr"><span class="gi">SODIUM</span>Your bloodwork shows 136 (low-normal). With this training volume you're losing sodium through sweat. Add LMNT or salt to pre/intra workout water. Low sodium = poor muscle contractions = weaker lifts.</div>
-    <div class="gr"><span class="gi">SLEEP</span>Casein + cottage cheese every night. 8–9 hours. On TRT your recovery capacity is higher but only if sleep is protected.</div>
-  </div>
-  <div class="gbox"><h3>BLOODWORK NOTES</h3>
-    <div class="gr"><span class="gi">A1C 5.0</span>Excellent. No insulin resistance concerns. Carb intake of 365g is well tolerated.</div>
-    <div class="gr"><span class="gi">LIPIDS</span>TC 117, LDL 63.5, HDL 49.7, TG 72. Lipitor is working. HDL could be higher — the Zone 2 cardio and fish oil will help this over time.</div>
-    <div class="gr"><span class="gi">KIDNEY</span>Microalbumin normal. 235g protein is safe at this kidney function. Stay hydrated.</div>
-    <div class="gr"><span class="gi">TRT</span>.7ml keeps recovery elevated. Train hard, eat protein, sleep — the hormonal support is there.</div>
-  </div>
-</div>
-
-<!-- EXPORT/IMPORT BAR -->
-<div class="exp-bar">
-  <button class="exp-btn" onclick="exportData()">📤 EXPORT DATA</button>
-  <button class="exp-btn" onclick="document.getElementById('imp-file').click()">📥 IMPORT DATA</button>
-  <input type="file" id="imp-file" accept=".json" style="display:none" onchange="importData(event)">
 </div>
 
 <script>
-var CW=parseInt(localStorage.getItem('af6_wk')||'1');
-var DONE=JSON.parse(localStorage.getItem('af6_done_'+CW)||'[]');
-var currentDay=localStorage.getItem('af6_day')||'mon';
+var P='hy1';
+var START=new Date(2026,9,5);
+var NW=20;
+var DAYS=['mon','tue','wed','thu','fri','sat','sun'];
+var DN={mon:'Monday',tue:'Tuesday',wed:'Wednesday',thu:'Thursday',fri:'Friday',sat:'Saturday',sun:'Sunday'};
 
-var EXS=[
-  ['mon','ohp',4,true,'3×12-14\n+BURN\n⏱ 90s'],['mon','clr',4,true,'3×12-15\n+BURN\n⏱ 60s'],['mon','cfp',3,false,'3×15-20\n⏱ 60s'],
-  ['mon','idp',4,true,'3×12-14\n+BURN\n⏱ 90s'],['mon','cfl',3,false,'3×12-15\n⏱ 60s'],
-  ['mon','wch',3,false,'3×12 ea\n⏱ 45s'],['mon','pal',3,false,'3×40yd\nea side\n⏱ 45s'],['mon','ctc',3,false,'3×15 ea\n⏱ 45s'],
-  ['mon','shr',2,false,'2×12-15\n⏱ 60s'],['mon','rpd',2,false,'2×12-15\n⏱ 60s'],
-  ['tue','dl',4,false,'4×6\n@70%\n⏱ 3min'],['tue','lp',4,true,'3×12-14\n+BURN\n⏱ 90s'],['tue','le',4,true,'3×12-14\n+BURN\n⏱ 60s'],
-  ['tue','lc',4,true,'3×12-14\n+BURN\n⏱ 60s'],['tue','ht',3,false,'3×12-15\n⏱ 90s'],['tue','cr',4,false,'4×12-15\n⏱ 45s'],
-  ['tue','hc',2,false,'2×12-15\n⏱ 60s'],
-  ['wed','lpd',4,true,'3×12-14\n+BURN\n⏱ 90s'],['wed','csr',4,true,'3×12-14\n+BURN\n⏱ 90s'],['wed','scr',3,false,'3×12-14\n⏱ 90s'],['wed','sap',3,false,'3×12-15\n⏱ 60s'],
-  ['wed','ezc',4,true,'3×10-12\n+BURN\n⏱ 60s'],['wed','idc',3,false,'3×10-12\n⏱ 60s'],
-  ['wed','wlo',3,false,'3×12 ea\n⏱ 45s'],['wed','hkr',3,false,'3×15\n⏱ 45s'],
-  ['wed','cfl',2,false,'2×12-15\n⏱ 60s'],['wed','csh',2,false,'2×12-15\n⏱ 60s'],
-  ['thu','cpm',4,true,'3×12-14\n+BURN\n⏱ 90s'],['thu','idp',4,true,'3×12-14\n+BURN\n⏱ 90s'],['thu','cfl',3,false,'3×12-15\n⏱ 60s'],
-  ['thu','rpd',4,true,'3×12-14\n+BURN\n⏱ 60s'],['thu','oht',4,true,'3×12-14\n+BURN\n⏱ 60s'],['thu','tkb',3,false,'3×12-15\n⏱ 60s'],
-  ['thu','rdf',3,false,'3×15-20\n⏱ 60s'],['thu','dlr',3,true,'2×12-15\n+BURN\n⏱ 60s'],
-  ['thu','shr',2,false,'2×12-15\n⏱ 60s'],['thu','bic',2,false,'2×12-15\n⏱ 60s'],
-  ['fri','dlp',3,false,'See Rx\n⏱ 3min'],['fri','bj',4,false,'4×4\nMAX\n⏱ 2min'],['fri','llc',4,true,'3×12-14\n+BURN\n⏱ 60s'],
-  ['fri','rdl',3,false,'3×10-12\n⏱ 90s'],['fri','lpc',4,false,'4×15-20\n⏱ 45s'],
-  ['fri','lrc',3,false,'3×15 ea\n⏱ 45s'],['fri','db',3,false,'3×20 alt\n⏱ 45s'],
-  ['fri','csr',2,false,'2×12-14\n⏱ 60s'],
-];
+function ph(w){
+  if(w===6||w===11||w===16) return 'DL';
+  if(w<=5) return 'ACC'; if(w<=10) return 'BLD'; if(w<=15) return 'INT'; if(w<=19) return 'PEAK'; return 'TAPER';
+}
+var PH={
+  ACC:{n:'ACCUMULATE',c:'var(--od)',d:'Volume phase. Compounds 8–12, isolation 12–15. Norwegian build.'},
+  BLD:{n:'BUILD',c:'var(--blue2)',d:'Heavier. Compounds 6–10, isolation 10–12. 2-mile speed rises.'},
+  INT:{n:'INTENSIFY',c:'var(--red2)',d:'Strength-hypertrophy. Compounds 6–8. Hex bar climbs toward the 3RM.'},
+  PEAK:{n:'AFT PEAK',c:'var(--red2)',d:'Volume trims, intensity holds. AFT event practice.'},
+  DL:{n:'DELOAD',c:'var(--green2)',d:'About 40% fewer sets at RPE 6. Growth shows up in recovery.'},
+  TAPER:{n:'TAPER · TEST',c:'var(--green2)',d:'Stay sharp and fresh. AFT week.'}
+};
+var REPS={c:{ACC:'8–12',BLD:'6–10',INT:'6–8',PEAK:'6–8',DL:'10',TAPER:'6–8'},
+          i:{ACC:'12–15',BLD:'10–12',INT:'8–12',PEAK:'10–12',DL:'12–15',TAPER:'10–12'}};
+var RPE={ACC:'RPE 7–8',BLD:'RPE 8',INT:'RPE 8',PEAK:'RPE 8',DL:'RPE 6',TAPER:'RPE 7'};
+var REST={c:'2:00',i:'1:30',dl:'2:00 · up to 3:00 on triples'};
 
-function lk(w,d,e,s){return 'af6:w'+w+':'+d+':'+e+':s'+s;}
+var HEX=['','4×6 @ 225','4×6 @ 235','4×5 @ 245','4×5 @ 255','4×4 @ 265','3×3 @ 225','4×4 @ 275','4×3 @ 285','4×3 @ 295','3×3 @ 305','3×3 @ 245','4×3 @ 295','3×3 @ 310','3×3 @ 320','3×2 @ 330','3×3 @ 255','3×3 @ 320 then 1×3 @ 335','1×3 @ 340–350 · AFT sim','2×3 @ 300','1×3 @ 275 · openers only'];
+var HEXS=[0,4,4,4,4,4,3,4,4,4,3,3,4,3,3,3,3,4,1,2,1];
 
-function buildAllSets(){EXS.forEach(function(e){buildSets(e[0],e[1],e[2],e[3],e[4]||'');});}
+var MON_RUN=['','6×400m @ 1:48–1:52 · 90s walk/jog','5×800m @ 3:36–3:40 · 2:00 jog','6×800m @ 3:34–3:38 · 2:00 jog','5×3 min hard / 2 min easy · RPE 8','6×800m @ 3:32–3:36 · 2:00 jog','4×400m @ 1:50 controlled · march week','5×3 min hard / 2 min easy · RPE 8','8×400m @ 1:44–1:46 · 75s jog','6×800m @ 3:28–3:32 · 2:00 jog','4×4 min hard / 2 min easy · RPE 8','4×400m @ 1:48 controlled','5×800m @ 3:26–3:30 · 2:00 jog','8×400m @ 1:42–1:44 · 75s jog','6×800m @ 3:24–3:28 · 2:00 jog','4×4 min hard / 2 min easy · RPE 8','4×400m @ 1:46 controlled','3×1000m @ 4:12–4:15 (goal pace) · 2:30 jog','6×400m @ 1:39–1:41 · 90s jog','4×400m @ 1:40 · full recovery','3×200m relaxed-fast · test week'];
+var THU_RUN=['','3×6 min @ 7:50–8:00/mi · 1 min jog','3×7 min @ 7:50/mi · 1 min jog','20 min continuous @ 7:50/mi','2×10 min @ 7:45/mi · 2 min jog','20 min continuous @ 7:45/mi','Easy 20 min + 4 strides · march Saturday','Easy 20 min · legs recovering from the march','3×8 min @ 7:40/mi · 1 min jog','2×12 min @ 7:35/mi · 2 min jog','22 min continuous @ 7:35/mi','Easy 25 min','3×8 min @ 7:30/mi · 1 min jog','22 min continuous @ 7:30/mi','2×12 min @ 7:25/mi · 2 min jog','24 min continuous @ 7:25/mi','Easy 25 min','2-MILE TIME TRIAL · log it and reset goal paces','20 min continuous @ 7:20/mi','2×8 min @ 7:15/mi · 2 min jog','Easy 15 min + 4 strides'];
+var SAT=['',
+ ['RUCK 8 mi · 25 lb dry + water','Target 14:30–15:00/mi. Walk hills, shuffle flats.'],
+ ['RUCK 10 mi · 25 lb','Target 14:30/mi. Test the boots and socks you will march in.'],
+ ['RUCK 12 mi · 25 lb','14:15–14:30/mi. Ruck shuffle 2 min every 10 min.'],
+ ['RUCK 15 mi · 25 lb · PEAK','March pace 14:15/mi. Eat and drink exactly like march day.'],
+ ['RUCK 8 mi · 25 lb · EASY','Final gear check. Nothing new from here on.'],
+ ['NORWEGIAN FOOT MARCH','18.6 mi · 25 lb dry at start and finish · 4:35 cutoff for 35–42 = 14:46/mi. Aim 14:00–14:15/mi for about a 4:25 finish with buffer.'],
+ ['RECOVERY · walk 30–40 min','No ruck, no run. Feet and hips recover.'],
+ ['LONG RUN 40 min Z2','Finish with 4×20s strides on a painted line.'],
+ ['RUCK 6 mi · 35 lb','Strength-endurance maintenance at about 15:00/mi.'],
+ ['LONG RUN 45 min Z2','Full-sentence pace the whole way.'],
+ ['EASY 30 min walk/jog','Deload week.'],
+ ['LONG RUN 45 min Z2','Holiday week. Keep it easy.'],
+ ['RUCK 6 mi · 35 lb','About 15:00/mi.'],
+ ['LONG RUN 50 min Z2',''],
+ ['LONG RUN 50 min Z2',''],
+ ['EASY 30 min','Deload week.'],
+ ['LONG RUN 45 min Z2',''],
+ ['EASY 40 min + 4 strides',''],
+ ['EASY 35 min',''],
+ ['AFT WEEK','20 min shakeout + 4 strides two days before the test. Otherwise rest.']];
 
-function buildSets(day,ex,n,hasBurnout,rxText){
-  var el=document.getElementById('sl-'+day+'-'+ex);if(!el)return;
-  el.querySelectorAll('.bstat').forEach(function(s){s.remove();});
-  var card=el.closest('.exc');
-  if(card&&rxText){var top=card.querySelector('.ext');if(top&&!top.querySelector('.exrx')){var rx=document.createElement('div');rx.className='exrx';rx.textContent=rxText;top.appendChild(rx);}}
-  var hdr=document.createElement('div');hdr.className='chdr';
-  hdr.innerHTML='<span>SET</span><span>LBS</span><span>REPS</span><span>PREV</span><span>✓</span>';
-  el.appendChild(hdr);
-  var ws=hasBurnout?n-1:n;
-  for(var i=0;i<ws;i++)appendRow(el,day,ex,i,false);
-  if(hasBurnout){
-    var bl=document.createElement('div');bl.className='blbl';
-    var prev=getPrev(day,ex,n-1);var pt='';
-    if(prev&&prev.r){var pr=parseInt(prev.r);pt=' · PREV: '+(prev.w?prev.w+'×':'')+prev.r+' '+(pr>=20?'✅':pr>=15?'✔':'↑');}
-    bl.textContent='BURNOUT 15–20'+pt;el.appendChild(bl);
-    appendRow(el,day,ex,n-1,true);
+function plank(w){ if(w<=5) return '3×60s'; if(w<=10) return '3×90s'; if(w<=15) return '2×2:00'; return '1×max (AFT sim) + 1×60s'; }
+function accel(w){ var p=ph(w); if(p==='DL'||p==='TAPER') return '3×10yd + 2×20yd @ smooth 80%'; if(w<=5) return '4×10yd + 3×20yd, walk back'; if(w<=10) return '3×10 + 3×20 + 2×30yd'; if(w<=15) return '3×20yd + 2 flying 20s'; return '2×10 + 2×20yd + 2 flying 20s'; }
+
+var PLAN={
+mon:{t:'CHEST · TRICEPS',s:'Upper pec priority + tricep mass',est:'~54 min',
+ wu:['5 min bike easy','Band pull-apart 2×20 · arm circles','Incline DB press 1×12 @ 50%. Feel the upper pec, not the shoulder.'],
+ ex:[
+ {id:'idp',n:'Incline DB Press · 15–20°',c:'CHEST · UPPER',t:'c',s:4,no:'Low angle keeps the load on the upper pec instead of the front delt. Elbows 60–75°, press up and slightly in. <b>Exhale through the press. Never hold your breath.</b>'},
+ {id:'cpm',n:'Chest Press Machine',c:'CHEST · PRESS',t:'c',s:3,no:'Handles at mid chest. Full stretch, 2 sec lowering.'},
+ {id:'cfl',n:'Cable Fly · Low to High',c:'CHEST · UPPER',t:'i',s:3,no:'Cables low, arc up to chin height, 1 sec squeeze. Primary upper pec shaper.'},
+ {id:'pdk',n:'Pec Deck',c:'CHEST · DEFINITION',t:'i',s:3,no:'Deep stretch, 1 sec squeeze. Builds the mid and inner chest line.'},
+ {id:'oht',n:'OH Cable Tricep Extension',c:'TRI · LONG HEAD',t:'i',s:3,ss:'A1',no:'Rope, face away, elbows by ears. The long head is the biggest head.'},
+ {id:'rpd',n:'Rope Pushdown',c:'TRI · LATERAL',t:'i',s:3,ss:'A2',no:'Elbows pinned, spread the rope at the bottom.'}]},
+tue:{t:'LEGS A · HEX BAR',s:'Hex bar + quads + glutes · knee safe',est:'~55 min',
+ wu:['5 min bike','Leg press 1×15 light','Hex bar ramp: bar ×8, 135×5, 185×3, 225×1 (skip steps above the day’s load)'],
+ ex:[
+ {id:'hex',n:'Hex Bar Deadlift',c:'AFT · HINGE',t:'dl',no:'Brace, then exhale as you drive. Full reset every rep. <b>RPE 8 cap.</b> When bar speed dies, that set is done.'},
+ {id:'lp',n:'Leg Press',c:'QUAD',t:'c',s:3,no:'Feet mid platform, shoulder width. Knee friendly depth, no locked knee slam.'},
+ {id:'le',n:'Leg Extension',c:'QUAD',t:'i',s:3,ss:'H1',no:'2 sec squeeze at top, 3 sec lowering.'},
+ {id:'slc',n:'Seated Leg Curl',c:'HAMSTRING',t:'i',s:3,ss:'H2',no:'Lean the torso forward for a longer hamstring stretch. 3 sec negative.'},
+ {id:'ht',n:'Hip Thrust',c:'GLUTE',t:'c',s:3,no:'Pad the bar. Chin tucked, ribs down, 1 sec lockout.'},
+ {id:'scr',n:'Standing Calf Raise',c:'CALF',t:'i',s:3,ss:'G1',no:'2 sec stretch pause at the bottom. Calves carry the ruck and the run.'},
+ {id:'dlr',n:'DB Lateral Raise',c:'SIDE DELT · 2x',t:'i',s:3,ss:'G2',no:'Lead with the elbow, stop at shoulder height.'}]},
+wed:{t:'BACK · BICEPS',s:'Width + mid back thickness + arms',est:'~57 min',
+ wu:['5 min row or bike','Face pull 2×15 light','Straight-arm pulldown 1×15 light · dead hang 2×20s'],
+ ex:[
+ {id:'lpd',n:'Lat Pulldown · Wide',c:'BACK · WIDTH',t:'c',s:3,no:'Drive elbows down to your back pockets. Full stretch at the top every rep.'},
+ {id:'csr',n:'Chest-Supported Row',c:'BACK · MID',t:'c',s:4,no:'Chest glued to the pad so the lower back never takes over. Pull to the lower ribs, 1 sec squeeze.'},
+ {id:'sacr',n:'Single-Arm Cable Row',c:'BACK · MID / LAT',t:'c',s:3,no:'Seated, elbow to hip. Right then left with no rest between arms. Let the shoulder blade stretch forward, then pull it all the way back.'},
+ {id:'sap',n:'Straight-Arm Pulldown',c:'BACK · LAT',t:'i',s:3,ss:'B1',no:'Arms long, arc to thighs.'},
+ {id:'csh',n:'Cable Shrug',c:'TRAPS',t:'i',s:3,ss:'B2',no:'2 sec hold at top. Start light on the left side and back off if the old trap injury talks.'},
+ {id:'ezc',n:'EZ Bar Curl',c:'BICEP · MASS',t:'i',s:3,no:'Elbows pinned, no hip swing, 2 sec lowering.'},
+ {id:'idc',n:'Incline DB Curl',c:'BICEP · LONG HEAD',t:'i',s:3,no:'Bench 45–60°, arms hang behind the torso. The stretch builds the peak.'}]},
+thu:{t:'SHOULDERS · TRAPS · ARMS',s:'Delts + traps + arm supersets',est:'~55 min',
+ wu:['Face pull 2×15 light','Cable lateral 1×15 light','Rope pushdown 1×20 light to warm the elbows'],
+ ex:[
+ {id:'ohp',n:'Seated DB Press · Neutral Grip',c:'SHOULDER · PRESS',t:'c',s:3,no:'Palms facing, elbows slightly forward. Easiest position for the left shoulder. Stop short of pain, not short of effort.'},
+ {id:'clr',n:'Cable Lateral Raise',c:'SIDE DELT',t:'i',s:4,no:'Cable behind the body, raise to shoulder height. Width builds the frame.'},
+ {id:'rpd2',n:'Reverse Pec Deck',c:'REAR DELT',t:'i',s:3,no:'Thumbs down, sweep wide.'},
+ {id:'dsh',n:'DB Shrug · Forward Lean',c:'TRAPS',t:'i',s:3,no:'Lean about 15° to hit the mid traps. 2 sec hold at top.'},
+ {id:'pcc',n:'Preacher or Cable Curl',c:'BICEP · SHORT HEAD',t:'i',s:3,ss:'D1',no:'Full stretch at the bottom.'},
+ {id:'dip',n:'Dip Machine',c:'TRI · MASS',t:'i',s:3,ss:'D2',no:'Chest up, full lockout.'},
+ {id:'hmc',n:'Hammer Curl',c:'BICEP · BRACHIALIS',t:'i',s:3,ss:'E1',no:'The brachialis pushes the bicep up for a thicker arm from the side.'},
+ {id:'sap2',n:'Single-Arm Cable Pushdown',c:'TRI · FINISH',t:'i',s:3,ss:'E2',no:'One arm at a time, neutral or reverse grip.'}]},
+fri:{t:'LEGS B · CHEST / BACK 2x',s:'Posterior legs + second chest and back hit',est:'~50 min',
+ wu:['5 min bike','Leg curl 1×15 light','Hip hinge with DBs 1×10 light'],
+ ex:[
+ {id:'lpw',n:'Leg Press · Feet High',c:'GLUTE / HAM',t:'c',s:3,rk:1,no:'Feet high and wide shifts load to glutes and hamstrings.'},
+ {id:'llc',n:'Lying Leg Curl',c:'HAMSTRING',t:'i',s:3,no:'Hips pinned to the pad. Different angle than Tuesday.'},
+ {id:'rdl',n:'DB Romanian Deadlift',c:'HAM · HINGE',t:'c',s:3,rk:1,no:'Moderate load. Hinge until the hamstrings stretch and stop above mid shin to protect the lower back.'},
+ {id:'le2',n:'Leg Extension',c:'QUAD',t:'i',s:2,rk:1,no:'Pump sets, 2 sec squeeze.'},
+ {id:'mip',n:'Incline Machine Press',c:'CHEST · 2x',t:'c',s:3,ss:'F1',no:'No incline machine? Low incline DB press.'},
+ {id:'cgp',n:'Close-Grip Pulldown',c:'BACK · 2x',t:'c',s:3,ss:'F2',no:'Elbows tight, pull to the sternum.'},
+ {id:'sccr',n:'Seated Calf Raise',c:'CALF · SOLEUS',t:'i',s:3,no:'The soleus is the ruck muscle. Pause at the bottom.'}]},
+sat:{t:'RUCK / LONG AEROBIC',s:'Norwegian build, then aerobic base',est:'',ex:[]},
+sun:{t:'FULL REST',s:'Sleep 8–9 hrs',est:'',ex:[]}
+};
+
+function amFor(d,w){
+  if(d==='mon') return ['0645 · INTERVALS · TRACK',['5 min jog + 2 strides on a painted line','Main: '+MON_RUN[w],'Easy jog out to 0715']];
+  if(d==='tue') return ['0645 · ZONE 2 · NO IMPACT',['Bike or incline walk 30 min, HR 120–140','Legs just got hit. Protect them for Thursday.']];
+  if(d==='wed') return ['0645 · EASY RUN + STRIDES',['25 min Z2 at full sentence pace (about 8:45–9:30/mi)','4×20s relaxed strides with a painted line between your feet']];
+  if(d==='thu') return ['0645 · TEMPO · THRESHOLD',['5 min warm-up jog','Main: '+THU_RUN[w],'Easy jog out the remainder']];
+  if(d==='fri'){ if(w===6) return ['0645 · SHAKEOUT',['20 min easy bike. March tomorrow.']]; if(w<=5) return ['0645 · RUCK WALK',['Incline treadmill 30 min · 10–12% grade · 3.2–3.5 mph · 25 lb ruck','March legs with zero pounding']]; return ['0645 · ZONE 2',['Bike or incline walk 30 min']]; }
+  return null;
+}
+function pmFor(d,w){
+  var p=ph(w),dl=(p==='DL'||p==='TAPER');
+  if(d==='mon') return ['PM · GAIT RESET + SPEED / POWER · ~20 min',[
+    'Adductor rock-back 10/side · short-lever Copenhagen 2×15–20s/side · banded lateral walk 2×12/side',
+    'A-march 2×20yd · A-skip 2×20yd',
+    'Yard-line railroad drill 3×20yd: painted line between your feet, each foot lands under its own hip. Natural width, never forced wide.',
+    dl?'Pogo 2×10 · Box jump 2×3 (step down)':'Pogo 3×12 · Box jump 3×3 (step down) · Broad jump 3×2 · Lateral bound + 2 sec stick 2×3/side',
+    'Accelerations: '+accel(w),
+    'Tibialis raise 2×20 · Single-leg calf raise 2×12/side']];
+  if(d==='wed') return ['PM · POSTERIOR CHAIN + TRUNK · ~20 min',[
+    'Nordic curl (anchored) or slider leg curl '+(dl?'2':'3')+'×5, slow lowering',
+    'Copenhagen plank 2×'+(w<8?'20':'30')+'s/side for the hip stability that fixes the crossover',
+    'Bird dog 2×8/side with a 3 sec hold (back friendly extensor work)',
+    'Suitcase carry 3×40yd/side, heavy DB, zero lean',
+    'Plank: '+plank(w),
+    'Dead bug 2×10/side']];
+  if(d==='thu'){ var it=['Single-leg balance 2×30s/side, eyes up','Railroad drill 3×20yd + 2 relaxed strides on the line'];
+    if(w<13) it.push('Hand-release push-ups: 4 sets of (your max − 3). Grease the groove, never to failure.');
+    else { it.push(w%2?'Hand-release push-ups: 2 min AFT simulation, 1 attempt. Log the number.':'Hand-release push-ups: 4 × (max − 3)'); it.push('Sprint-drag-carry: 2 reps if the gym has a sled and 40s. Otherwise 5×25m sprints + 5×25m DB farmer shuffle.'); }
+    return ['PM · GAIT + AFT SKILLS · ~15 min',it]; }
+  if(d==='tue'||d==='fri') return ['PM · OPTIONAL',['15–20 min easy walk','Hip flexor and calf stretch 2×30s/side. No extra loading on leg days.']];
+  return null;
+}
+
+// storage, all wrapped so a blocked store never breaks the page
+function g(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}}
+function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function rm(k){try{localStorage.removeItem(k)}catch(e){}}
+function K(w,d,e,s){return P+':w'+w+':'+d+':'+e+':s'+s;}
+function XK(w,d,e){return P+':x:w'+w+':'+d+':'+e;}
+
+var CW=1,CD='mon';
+function weekOf(dt){var n=Math.floor((dt-START)/864e5/7)+1;return Math.min(NW,Math.max(1,n));}
+function dayOf(dt){return DAYS[(dt.getDay()+6)%7];}
+function wkDate(w){var d=new Date(START);d.setDate(d.getDate()+(w-1)*7);return (d.getMonth()+1)+'/'+d.getDate();}
+function saveNav(){sv(P+':nav',{w:CW,d:CD,t:Date.now()});}
+
+function setsFor(ex,w){
+  var p=ph(w);
+  if(ex.t==='dl') return HEXS[w];
+  var s=ex.s;
+  if(p==='DL') s=Math.max(2,Math.round(s*0.6));
+  else if(p==='TAPER') s=Math.max(2,s-2);
+  else if(p==='PEAK') s=Math.max(2,s-1);
+  if(ex.rk&&w>=3&&w<=5) s=Math.max(2,s-1);
+  return s+(g(XK(w,CD,ex.id))||0);
+}
+function repsFor(ex,w){ if(ex.t==='dl') return HEX[w]; return ex.rx||REPS[ex.t][ph(w)]; }
+function restFor(ex){ if(ex.ss&&ex.ss[1]==='1') return 'then '+ex.ss[0]+'2'; if(ex.ss) return 'rest 1:30'; return 'rest '+REST[ex.t]; }
+
+function sessionLog(w,d,e){var L=[],any=false;for(var s=0;s<10;s++){var v=g(K(w,d,e,s));if(v&&(v.w||v.r)){L[s]=v;any=true;}}return any?L:null;}
+function lastSession(e,w,d){
+  var di=DAYS.indexOf(d);
+  for(var ww=w;ww>=1;ww--){for(var dd=6;dd>=0;dd--){
+    if(ww===w&&dd>=di)continue;
+    var L=sessionLog(ww,DAYS[dd],e);
+    if(L&&L.some(function(x){return x&&x.r;}))return{w:ww,d:DAYS[dd],L:L};
+  }}
+  return null;
+}
+function topOf(r){var m=String(r).match(/(\d+)\s*$/);return m?parseInt(m[1]):null;}
+
+function renderWeeks(){
+  var h='';
+  for(var w=1;w<=NW;w++){var p=ph(w);var cls='wb'+(w===CW?' on':'')+(p==='DL'?' dl':'')+(w===6||w===20?' ev':'');
+    h+='<button class="'+cls+'" onclick="goWeek('+w+')">W'+w+'<small>'+wkDate(w)+'</small></button>';}
+  var el=document.getElementById('wkbar');el.innerHTML=h;
+  var on=el.querySelector('.on');if(on)el.scrollLeft=on.offsetLeft-el.clientWidth/2+on.clientWidth/2;
+  var p=PH[ph(CW)];
+  document.getElementById('phase').innerHTML='<div class="pn" style="color:'+p.c+'">WK '+CW+' · '+p.n+'</div><div class="pd">'+p.d+'</div>';
+}
+function renderDays(){
+  var done=g(P+':done:w'+CW)||[];var h='';
+  DAYS.forEach(function(d){h+='<button class="db'+(d===CD?' on':'')+(done.indexOf(d)>-1?' dn':'')+'" onclick="goDay(\''+d+'\')">'+d.toUpperCase()+'</button>';});
+  document.getElementById('dbar').innerHTML=h;
+  var n=['mon','tue','wed','thu','fri','sat'].filter(function(d){return done.indexOf(d)>-1;}).length;
+  document.getElementById('pc').textContent=n+'/6';document.getElementById('pf').style.width=(n/6*100)+'%';
+}
+function box(cls,title,items){return '<div class="box '+cls+'"><div class="bt">'+title+'</div><ul>'+items.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul></div>';}
+
+function renderPage(){
+  var d=CD,w=CW,pl=PLAN[d],done=g(P+':done:w'+w)||[];
+  var h='<div class="dh"><div><div class="d1 mono">'+DN[d]+' · Wk '+w+'</div><div class="d2">'+pl.t+'</div><div class="d3 mono">'+pl.s+(pl.est?' · '+pl.est:'')+'</div></div>';
+  if(d!=='sun') h+='<button class="mb'+(done.indexOf(d)>-1?' dn':'')+'" onclick="markDay()">'+(done.indexOf(d)>-1?'✓ DONE':'MARK DONE')+'</button>';
+  h+='</div>';
+  if(d==='sat'){ var s=SAT[w]; h+=box(w===6||w===20?'evb':'am',s[0],[s[1]||'Zone 2 the whole way.','After: 10 min walk, check feet, refuel within 30 min.']);
+    if(w<=6) h+=box('wu','NORWEGIAN NOTES',['Pack 25 lb dry (weighed without water), then add water on top','Same boots, socks and ruck you will march in. Tape hot spots before they blister.','Walk uphills, shuffle flats and downhills. The cutoff pace is faster than most people walk.']);
+    h+=box('pm','GAIT CUES',['Any running today: each foot under its own hip, short quick steps, quiet pelvis']);
   }
-  var ab=document.createElement('button');ab.className='adset';ab.textContent='+ ADD SET';
-  ab.onclick=(function(d,e,wrap){return function(){var rows=wrap.querySelectorAll('.setr').length;appendRow(wrap,d,e,rows,false);wrap.appendChild(this);};})(day,ex,el);
-  el.appendChild(ab);
-  var vf=document.createElement('div');vf.className='vf';vf.id='vf-'+day+'-'+ex;
-  vf.innerHTML='<span>0/'+n+'</span><span>Vol: --</span>';el.appendChild(vf);
-  restoreVals(day,ex,n+(hasBurnout?1:0));
+  if(d==='sun') h+=rulesHTML();
+  if(pl.wu) h+='<div class="sec">Warm-up</div>'+box('wu','WARM-UP · 5–8 MIN',pl.wu);
+  if(pl.ex.length) h+='<div class="sec">Lift · 0545–0645</div>';
+  pl.ex.forEach(function(ex){h+=exCard(ex,w,d);});
+  var am=amFor(d,w); if(am) h+='<div class="sec">Run · 0645–0715</div>'+box('am',am[0],am[1]);
+  var pm=pmFor(d,w); if(pm) h+='<div class="sec">Afternoon</div>'+box('pm',pm[0],pm[1]);
+  document.getElementById('page').innerHTML=h;
+  pl.ex.forEach(function(ex){restoreCard(ex,w,d);});
 }
 
-function appendRow(el,day,ex,i,isBurn){
-  var prev=getPrev(day,ex,i);var pt=(prev&&prev.w&&prev.r)?prev.w+'×'+prev.r:'—';
-  var r=document.createElement('div');r.className='setr';
-  r.innerHTML='<div class="sn">S'+(i+1)+'</div>'+
-    '<input class="si" type="number" placeholder="lbs" data-d="'+day+'" data-e="'+ex+'" data-i="'+i+'" data-f="w" data-burn="'+(isBurn?'1':'0')+'" oninput="onInp(this)">'+
-    '<input class="si" type="number" placeholder="reps" data-d="'+day+'" data-e="'+ex+'" data-i="'+i+'" data-f="r" data-burn="'+(isBurn?'1':'0')+'" oninput="onInp(this)">'+
-    '<div class="pc'+(pt==='—'?' empty':'')+'">'+pt+'</div>'+
-    '<button class="sd" id="sd-'+day+'-'+ex+'-'+i+'" data-burn="'+(isBurn?'1':'0')+'" onclick="this.classList.toggle(\'done\')">✓</button>';
-  var ab=el.querySelector('.adset');if(ab)el.insertBefore(r,ab);else el.appendChild(r);
-}
-
-function onInp(inp){
-  var d=inp.getAttribute('data-d'),e=inp.getAttribute('data-e'),
-      i=parseInt(inp.getAttribute('data-i')),f=inp.getAttribute('data-f');
-  var isBurn=inp.getAttribute('data-burn')==='1';
-  var key=lk(CW,d,e,i);var saved=JSON.parse(localStorage.getItem(key)||'{}');
-  saved[f]=inp.value;localStorage.setItem(key,JSON.stringify(saved));
-  var btn=document.getElementById('sd-'+d+'-'+e+'-'+i);
-  if(btn&&saved.w&&saved.r){
-    if(isBurn){var r=parseInt(saved.r);btn.className=r>=15?'sd burn-done':'sd burn-short';}
-    else{btn.className='sd done';}btn.textContent='✓';
+function exCard(ex,w,d){
+  var n=setsFor(ex,w),reps=repsFor(ex,w),last=lastSession(ex.id,w,d);
+  var lastTxt='',up='';
+  if(last){ var parts=last.L.filter(function(x){return x&&x.r;}).map(function(x){return (x.w||'BW')+'×'+x.r;});
+    lastTxt='<div class="last">LAST (Wk'+last.w+' '+last.d.toUpperCase()+'): <b>'+parts.join(' · ')+'</b></div>';
+    var top=topOf(reps); if(ex.t!=='dl'&&top){var ok=last.L.filter(function(x){return x&&x.r;});
+      if(ok.length>=2&&ok.every(function(x){return parseInt(x.r)>=top;})) up='<div class="up">⬆ Hit '+top+' on every set last time. Add weight.</div>';}
   }
-  updateVF(d,e);checkPR(d,e);
-  if(f==='r'&&isBurn){
-    var ex=document.getElementById('bstat-'+d+'-'+e+'-'+i);if(ex)ex.remove();
-    var rv=parseInt(inp.value);
-    if(!isNaN(rv)&&rv>0){
-      var stat=document.createElement('div');stat.className='bstat';stat.id='bstat-'+d+'-'+e+'-'+i;
-      if(rv>=20){stat.style.color='var(--green2)';stat.textContent='✅ CRUSHED';}
-      else if(rv>=15){stat.style.color='var(--od)';stat.textContent='✔ HIT ('+rv+'/20)';}
-      else{stat.style.color='var(--red2)';stat.textContent='↑ SHORT — need '+(15-rv)+' more';}
-      var sr=inp.closest('.setr');if(sr){if(sr.nextSibling)sr.parentNode.insertBefore(stat,sr.nextSibling);else sr.parentNode.appendChild(stat);}
-    }
-  }
+  var rx=ex.t==='dl'?reps:(n+' × '+reps);
+  var h='<div class="ex"><div class="et"><div><div class="ec">'+(ex.ss?'<span class="ss">'+ex.ss+'</span>':'')+ex.c+'</div><div class="en">'+ex.n+'</div>'+lastTxt+up+'</div>';
+  h+='<div class="rx">'+rx+'<div class="r2">'+(ex.t==='dl'?'RPE ≤8':RPE[ph(w)])+'</div><div class="r3">'+restFor(ex)+'</div></div></div>';
+  h+='<div class="log"><div class="hd"><span>SET</span><span>LBS</span><span>REPS</span><span>LAST</span><span>✓</span></div>';
+  for(var s=0;s<n;s++) h+=rowHTML(ex.id,s,last);
+  h+='<button class="add" onclick="addSet(\''+ex.id+'\')">+ ADD SET</button><div class="ft" id="ft-'+ex.id+'"></div></div>';
+  h+='<div class="nt">'+ex.no+'</div></div>';
+  return h;
+}
+function rowHTML(e,s,last){
+  var pv=(last&&last.L[s]&&last.L[s].r)?((last.L[s].w||'BW')+'×'+last.L[s].r):'—';
+  return '<div class="row"><div class="sn">'+(s+1)+'</div>'+
+    '<input class="in" id="in-'+e+'-'+s+'-w" type="number" inputmode="decimal" placeholder="lbs" aria-label="Set '+(s+1)+' weight" data-e="'+e+'" data-s="'+s+'" data-f="w" oninput="onIn(this)">'+
+    '<input class="in" id="in-'+e+'-'+s+'-r" type="number" inputmode="numeric" placeholder="reps" aria-label="Set '+(s+1)+' reps" data-e="'+e+'" data-s="'+s+'" data-f="r" oninput="onIn(this)">'+
+    '<div class="pv'+(pv==='—'?' e':'')+'">'+pv+'</div>'+
+    '<button class="ck" id="ck-'+e+'-'+s+'" aria-label="Set '+(s+1)+' done" onclick="this.classList.toggle(\'ok\')">✓</button></div>';
+}
+function restoreCard(ex,w,d){
+  var n=setsFor(ex,w);
+  for(var s=0;s<n;s++){var v=g(K(w,d,ex.id,s));if(!v)continue;
+    var wi=document.getElementById('in-'+ex.id+'-'+s+'-w'),ri=document.getElementById('in-'+ex.id+'-'+s+'-r');
+    if(wi&&v.w)wi.value=v.w;if(ri&&v.r)ri.value=v.r;
+    var c=document.getElementById('ck-'+ex.id+'-'+s);if(c&&v.r)c.classList.add('ok');}
+  foot(ex.id,n);
+}
+function foot(e,n){
+  var vol=0,f=0;for(var s=0;s<n;s++){var v=g(K(CW,CD,e,s));if(v&&v.r){f++;vol+=(parseFloat(v.w)||0)*(parseInt(v.r)||0);}}
+  var el=document.getElementById('ft-'+e);if(el)el.innerHTML='<span>'+f+'/'+n+' sets</span><span>Vol '+(vol?vol.toLocaleString()+' lbs':'--')+'</span>';
+}
+function onIn(inp){
+  var e=inp.getAttribute('data-e'),s=+inp.getAttribute('data-s'),f=inp.getAttribute('data-f');
+  var k=K(CW,CD,e,s),v=g(k)||{};v[f]=inp.value;
+  if(!v.w&&!v.r)rm(k);else sv(k,v);
+  var c=document.getElementById('ck-'+e+'-'+s);if(c)c.classList.toggle('ok',!!v.r);
+  var ex=PLAN[CD].ex.filter(function(x){return x.id===e;})[0];if(ex)foot(e,setsFor(ex,CW));
+}
+function addSet(e){var k=XK(CW,CD,e);sv(k,(g(k)||0)+1);renderPage();}
+function markDay(){var k=P+':done:w'+CW,a=g(k)||[],i=a.indexOf(CD);if(i>-1)a.splice(i,1);else a.push(CD);sv(k,a);renderDays();renderPage();}
+function goWeek(w){CW=w;saveNav();renderWeeks();renderDays();renderPage();}
+function goDay(d){CD=d;saveNav();renderDays();renderPage();var b=document.getElementById('dbar');if(b.getBoundingClientRect().top<0)b.scrollIntoView();}
+
+function rulesHTML(){
+  return '<div class="rules"><h3>THE RULES</h3>'+
+  '<div class="rr"><b>BREATH</b><span>Exhale through every hard rep. No breath-hold grinding. RPE 8 cap on compounds; the last set of an isolation lift can touch RPE 9.</span></div>'+
+  '<div class="rr"><b>PROGRESS</b><span>Double progression: when every set hits the top of the rep range, add weight next time. The card flags it.</span></div>'+
+  '<div class="rr"><b>REST</b><span>Compounds 2:00 · isolation 1:30 · supersets run A1 into A2, then 1:30. Heavy hex bar triples may stretch to 3:00.</span></div>'+
+  '<div class="rr"><b>ONE BAD REP</b><span>Garner’s rule: the set ends at the first rep you can’t do with full range and control.</span></div>'+
+  '<div class="rr"><b>DELOAD</b><span>Weeks 6, 11, 16: sets drop about 40%, RPE 6. Week 6 lines up with the Norwegian.</span></div>'+
+  '<div class="rr"><b>GAIT</b><span>Railroad tracks, not a tightrope. Each foot under its own hip, short quick steps, knees forward, quiet pelvis. Never force a wide stance.</span></div>'+
+  '<div class="rr"><b>BODY</b><span>No squats, bent-over rows, upright rows or behind-neck work. Neutral grips for the left shoulder. Chest-supported rows for the lower back. Nerve symptoms mean stop that movement. Hip or groin pain stays at 0–2/10.</span></div></div>'+
+  '<div class="rules"><h3>GALPIN MODEL</h3>'+
+  '<div class="rr"><b>SEQUENCE</b><span>Hard running never lands the morning after heavy legs. Intervals Monday when legs are fresh, tempo Thursday 48 hrs after Legs A. Tuesday and Friday cardio is no impact.</span></div>'+
+  '<div class="rr"><b>SPEED</b><span>Plyos and accelerations stay explosive with full recovery. They are never conditioning.</span></div>'+
+  '<div class="rr"><b>VOLUME</b><span>Every muscle twice a week: chest 16 sets, back 16, biceps 12, triceps 12, quads and hams 11–12, delts about 16 counting presses.</span></div>'+
+  '<div class="rr"><b>FUEL</b><span>235P / 365C / 75F. Banana and uncrustable before, 40g protein within 30 min after. Salt the intra-workout water.</span></div></div>';
 }
 
-function updateVF(d,e){
-  var exDef=EXS.filter(function(x){return x[0]===d&&x[1]===e;})[0];if(!exDef)return;
-  var n=exDef[2];var vol=0,filled=0;
-  for(var i=0;i<n+3;i++){var s=JSON.parse(localStorage.getItem(lk(CW,d,e,i))||'{}');if(s.r)filled++;if(s.w&&s.r)vol+=(parseFloat(s.w)||0)*(parseInt(s.r)||0);}
-  var vf=document.getElementById('vf-'+d+'-'+e);
-  if(vf)vf.innerHTML='<span>'+filled+'/'+n+'</span><span>Vol: '+(vol>0?vol.toLocaleString()+' lbs':'--')+'</span>';
+// backup: the viewer blocks downloads, so backups go through the clipboard and a paste box
+function collect(){var out={};try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf(P+':')===0)out[k]=localStorage.getItem(k);}}catch(e){}return out;}
+function msg(t,bad){var m=document.getElementById('bk-msg');m.textContent=t;m.style.color=bad?'var(--red2)':'var(--green2)';}
+function copyBackup(){
+  var entries=collect(),n=Object.keys(entries).length;
+  var txt=JSON.stringify({app:'iron-hybrid',exported:new Date().toISOString(),prefix:P,entries:entries});
+  var ta=document.getElementById('bk-text');ta.value=txt;
+  var done=function(){msg('Copied '+n+' entries. Paste them into a note to keep.');};
+  var fallback=function(){ta.focus();ta.select();msg('Text selected below. Long-press and copy it.');};
+  try{navigator.clipboard.writeText(txt).then(done,fallback);}catch(e){fallback();}
 }
-
-function restoreVals(day,ex,n){
-  for(var i=0;i<n+3;i++){
-    var saved=JSON.parse(localStorage.getItem(lk(CW,day,ex,i))||'{}');
-    if(saved.w||saved.r){
-      var wi=document.querySelector('[data-d="'+day+'"][data-e="'+ex+'"][data-i="'+i+'"][data-f="w"]');
-      var ri=document.querySelector('[data-d="'+day+'"][data-e="'+ex+'"][data-i="'+i+'"][data-f="r"]');
-      if(wi&&saved.w)wi.value=saved.w;
-      if(ri&&saved.r){
-        ri.value=saved.r;var isBurn=ri.getAttribute('data-burn')==='1';
-        var btn=document.getElementById('sd-'+day+'-'+ex+'-'+i);
-        if(btn&&saved.w){if(isBurn){var rv=parseInt(saved.r);btn.className=rv>=15?'sd burn-done':'sd burn-short';}else btn.className='sd done';btn.textContent='✓';}
-        if(isBurn){var rv=parseInt(saved.r);if(!isNaN(rv)&&rv>0){
-          var stat=document.createElement('div');stat.className='bstat';stat.id='bstat-'+day+'-'+ex+'-'+i;
-          if(rv>=20){stat.style.color='var(--green2)';stat.textContent='✅ CRUSHED';}
-          else if(rv>=15){stat.style.color='var(--od)';stat.textContent='✔ HIT ('+rv+'/20)';}
-          else{stat.style.color='var(--red2)';stat.textContent='↑ SHORT — need '+(15-rv)+' more';}
-          var sr=ri.closest('.setr');if(sr){if(sr.nextSibling)sr.parentNode.insertBefore(stat,sr.nextSibling);else sr.parentNode.appendChild(stat);}
-        }}
-      }
-    }
-  }
-  updateVF(day,ex);
+var armed=false;
+function applyBackup(txt){
+  var d;try{d=JSON.parse(txt);}catch(e){msg('That text isn’t a valid backup. Paste the whole thing, including the { and }.',true);return;}
+  if(!d||!d.entries){msg('No workout entries found in that backup.',true);return;}
+  var n=0;Object.keys(d.entries).forEach(function(k){try{localStorage.setItem(k,d.entries[k]);n++;}catch(e){}});
+  msg('Restored '+n+' entries.');renderWeeks();renderDays();renderPage();
 }
-
-function getPrev(day,ex,si){if(CW<=1)return null;var s=JSON.parse(localStorage.getItem(lk(CW-1,day,ex,si))||'{}');return s.r?{w:s.w,r:s.r}:null;}
-
-function checkPR(d,e){
-  var best=0;for(var i=0;i<10;i++){var s=JSON.parse(localStorage.getItem(lk(CW,d,e,i))||'{}');if(s.w&&parseFloat(s.w)>best)best=parseFloat(s.w);}
-  if(!best)return;var ab=0;for(var w=1;w<CW;w++){for(var i=0;i<10;i++){var s=JSON.parse(localStorage.getItem(lk(w,d,e,i))||'{}');if(s.w&&parseFloat(s.w)>ab)ab=parseFloat(s.w);}}
-  var badge=document.getElementById('pr-'+d+'-'+e);
-  if(badge&&best>ab&&ab>0)badge.classList.add('show');else if(badge)badge.classList.remove('show');
+function restoreText(){
+  var b=document.getElementById('btn-restore'),txt=document.getElementById('bk-text').value.trim();
+  if(!txt){msg('Paste a backup into the box first.',true);return;}
+  if(!armed){armed=true;b.textContent='TAP AGAIN TO OVERWRITE MATCHING ENTRIES';setTimeout(function(){armed=false;b.textContent='RESTORE PASTED BACKUP';},4000);return;}
+  armed=false;b.textContent='RESTORE PASTED BACKUP';applyBackup(txt);
 }
+function importFile(ev){var f=ev.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(e){applyBackup(e.target.result);};r.readAsText(f);ev.target.value='';}
 
-// ── EXPORT / IMPORT ──
-function exportData(){
-  var data={exported:new Date().toISOString(),version:'af6',entries:{}};
-  for(var i=0;i<localStorage.length;i++){
-    var key=localStorage.key(i);
-    if(key&&(key.startsWith('af6:')||key.startsWith('af6_')))data.entries[key]=localStorage.getItem(key);
-  }
-  var dateStr=new Date().toISOString().split('T')[0];
-  var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='iron-fast-backup-'+dateStr+'.json';a.click();
-}
-
-function importData(event){
-  var file=event.target.files[0];if(!file)return;
-  var reader=new FileReader();
-  reader.onload=function(e){
-    try{
-      var data=JSON.parse(e.target.result);
-      if(data.entries){
-        var count=0;
-        Object.keys(data.entries).forEach(function(key){localStorage.setItem(key,data.entries[key]);count++;});
-        alert('Imported '+count+' entries. Reloading...');
-        location.reload();
-      }
-    }catch(err){alert('Import failed: '+err.message);}
-  };
-  reader.readAsText(file);
-  event.target.value='';
-}
-
-// ── NAV ──
-var ALL_DAYS=['mon','tue','wed','thu','fri','sat','sun'];
-function showDay(id,btn){
-  ALL_DAYS.forEach(function(d){var el=document.getElementById('day-'+d);if(el)el.style.display='none';});
-  document.querySelectorAll('.dbt').forEach(function(b){b.classList.remove('active');});
-  var el=document.getElementById('day-'+id);if(el)el.style.display='block';
-  if(btn)btn.classList.add('active');else{var t=document.getElementById('dtb-'+id);if(t)t.classList.add('active');}
-  currentDay=id;localStorage.setItem('af6_day',id);
-}
-
-function markDay(dayId){
-  var mb=document.getElementById('mb-'+dayId),tab=document.getElementById('dtb-'+dayId);
-  var idx=DONE.indexOf(dayId);
-  if(idx>-1){DONE.splice(idx,1);if(mb){mb.classList.remove('done');mb.textContent='MARK DONE';}if(tab)tab.classList.remove('done-d');}
-  else{DONE.push(dayId);if(mb){mb.classList.add('done');mb.textContent='✓ DONE';}if(tab)tab.classList.add('done-d');}
-  localStorage.setItem('af6_done_'+CW,JSON.stringify(DONE));updateProgress();
-}
-
-var grid=document.getElementById('wg');
-['WK1','WK2','WK3','WK4','WK5','WK6'].forEach(function(n,i){
-  var btn=document.createElement('button');btn.className='wbtn'+(i+1===CW?' active':'');btn.textContent=n;
-  btn.onclick=(function(wk,el){return function(){
-    CW=wk;localStorage.setItem('af6_wk',CW);DONE=JSON.parse(localStorage.getItem('af6_done_'+CW)||'[]');
-    document.querySelectorAll('.wbtn').forEach(function(b){b.classList.remove('active');});el.classList.add('active');
-    updateProgress();restoreDayBtns();
-    EXS.forEach(function(e){var sl=document.getElementById('sl-'+e[0]+'-'+e[1]);if(sl)sl.innerHTML='';var card=sl?sl.closest('.exc'):null;if(card){var rxb=card.querySelector('.exrx');if(rxb)rxb.remove();}buildSets(e[0],e[1],e[2],e[3],e[4]||'');});
-    showDay(currentDay,null);
-  };})(i+1,btn);grid.appendChild(btn);
-});
-
-function restoreDayBtns(){
-  ['mon','tue','wed','thu','fri','sat'].forEach(function(d){
-    var t=document.getElementById('dtb-'+d),m=document.getElementById('mb-'+d);
-    if(DONE.includes(d)){if(t)t.classList.add('done-d');if(m){m.classList.add('done');m.textContent='✓ DONE';}}
-    else{if(t)t.classList.remove('done-d');if(m){m.classList.remove('done');m.textContent='MARK DONE';}}
-  });
-}
-
-function updateProgress(){
-  var active=['mon','tue','wed','thu','fri','sat'];
-  var done=active.filter(function(d){return DONE.includes(d);}).length;
-  document.getElementById('wpf').style.width=(done/6*100)+'%';
-  document.getElementById('wpc').textContent=done+'/6';
-  var de=document.getElementById('wpd');de.innerHTML='';
-  [{id:'mon',l:'M'},{id:'tue',l:'T'},{id:'wed',l:'W'},{id:'thu',l:'T'},{id:'fri',l:'F'},{id:'sat',l:'S'},{id:'sun',l:'R'}].forEach(function(d){
-    var dot=document.createElement('div');dot.className='wpdt'+(DONE.includes(d.id)?' done':'');
-    dot.innerHTML='<span>'+d.l+'</span>';de.appendChild(dot);
-  });
-}
-
-updateProgress();restoreDayBtns();buildAllSets();showDay(currentDay,null);
+// boot: open today's session; keep the last view if it was within 3 hrs so a reload doesn't bounce you
+(function(){
+  var now=new Date(),nav=g(P+':nav');
+  if(nav&&Date.now()-nav.t<3*3600e3){CW=nav.w;CD=nav.d;}else{CW=weekOf(now);CD=dayOf(now);}
+  saveNav();renderWeeks();renderDays();renderPage();
+})();
 </script>
 </body>
 </html>
